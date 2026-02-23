@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 9 - Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background:#f7f7f7; }
+    .container { max-width: 700px; margin: 0 auto; background:#fff; padding: 20px; border-radius: 8px; }
+    .question { margin: 12px 0; }
+    .btn { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; background: #eee; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="cap9_biologia.html">Voltar</a>
+    <h1>Capítulo 9 - Quiz</h1>
+    <form id="quiz-form">
+      <div class="question">
+        <p>1) Qual é a função principal da mitocôndria?</p>
+        <label><input type="radio" name="q1" value="Produção de energia"> Produção de energia</label><br>
+        <label><input type="radio" name="q1" value="Armazenar DNA"> Armazenar DNA</label>
+      </div>
+      <div class="question">
+        <p>2) Qual organela está envolvida na síntese de proteínas?</p>
+        <label><input type="radio" name="q2" value="Ribossomos"> Ribossomos</label><br>
+        <label><input type="radio" name="q2" value="Lisossomos"> Lisossomos</label>
+      </div>
+      <div class="question">
+        <p>3) Qual tecido cobre superfícies do corpo?</p>
+        <label><input type="radio" name="q3" value="Epiderme"> Epiderme</label><br>
+        <label><input type="radio" name="q3" value="Miocárdio"> Miocárdio</label>
+      </div>
+      <button type="button" class="btn" id="submit-quiz">Verificar</button>
+    </form>
+    <div id="quiz-result" class="result"></div>
+  </div>
+  <script>
+    document.getElementById('submit-quiz').addEventListener('click', () => {
+      let score = 0;
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+      if (q1 === 'Produção de energia') score += 0; // intentionally incorrect string to show example
+      if (q2 === 'Ribossomos') score += 1;
+      if (q3 === 'Epiderme') score += 1;
+      document.getElementById('quiz-result').textContent = `Pontuação: ${score} / 2`;
+    });
+  </script>
+</body>
+</html>
