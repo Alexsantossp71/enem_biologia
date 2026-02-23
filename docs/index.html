@@ -169,8 +169,25 @@
       currentTrackId = null;
     }
 
+    // Helpers: map track -> lesson page path
+    function mapTrackToPage(id) {
+      const map = {
+        1: "/enem_biologia/cap1_biologia.html",
+        14: "/enem_biologia/cap1_biologia.html",
+        2: "/enem_biologia/cap2_biologia.html",
+        15: "/enem_biologia/cap2_biologia.html",
+        3: "/enem_biologia/cap3_biologia.html"
+      };
+      return map[id] || null;
+    }
+
     // Event handlers para o modal
     document.getElementById("start-btn").addEventListener("click", () => {
+      const tpath = mapTrackToPage(currentTrackId);
+      if (tpath) {
+        window.location.href = tpath;
+        return;
+      }
       if (currentTrackId != null) setProgress(currentTrackId, 0);
       renderGrid();
       updateModalProgress();
