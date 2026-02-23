@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 5 - Quiz</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; padding: 20px; background: #f7f7f7; }
+    .container { max-width: 720px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; }
+    h1 { margin: 0 0 12px; }
+    .question { margin: 12px 0; }
+    .btn { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; background: #eee; cursor: pointer; }
+    .result { margin-top: 12px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="cap5_biologia.html">Voltar</a>
+    <h1>Capítulo 5 - Quiz</h1>
+    <form id="quiz-form">
+      <div class="question">
+        <p>1) Qual é a primeira via metabólica na quebra da glicose?</p>
+        <label><input type="radio" name="q1" value="Glicólise"> Glicólise</label><br>
+        <label><input type="radio" name="q1" value="Ciclo de Krebs"> Ciclo de Krebs</label><br>
+        <label><input type="radio" name="q1" value="Fermentação"> Fermentação</label>
+      </div>
+      <div class="question">
+        <p>2) Qual organela produz a maior parte do ATP?</p>
+        <label><input type="radio" name="q2" value="Mitocôndria"> Mitocôndria</label><br>
+        <label><input type="radio" name="q2" value="Ribossomos"> Ribossomos</label><br>
+        <label><input type="radio" name="q2" value="Núcleo"> Núcleo</label>
+      </div>
+      <div class="question">
+        <p>3) Qual transporte consome energia?</p>
+        <label><input type="radio" name="q3" value="Transporte Passivo"> Transporte Passivo</label><br>
+        <label><input type="radio" name="q3" value="Transporte Ativo"> Transporte Ativo</label><br>
+        <label><input type="radio" name="q3" value="Osmose"> Osmose</label>
+      </div>
+      <button type="button" class="btn" id="submit-quiz">Verificar</button>
+    </form>
+    <div class="result" id="quiz-result"></div>
+  </div>
+
+  <script>
+    document.getElementById('submit-quiz').addEventListener('click', () => {
+      let score = 0;
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+      if (q1 === 'Glicólise') score++;
+      if (q2 === 'Mitocôndria') score++;
+      if (q3 === 'Transporte Ativo') score++;
+      document.getElementById('quiz-result').textContent = `Pontuação: ${score} / 3`;
+    });
+  </script>
+</body>
+</html>
