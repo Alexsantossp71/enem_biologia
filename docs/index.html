@@ -18,6 +18,7 @@
     .card-title { font-weight: 600; font-size: 15px; }
     .card-desc { font-size: 12.5px; color: var(--muted); min-height: 28px; }
     .progress-bar { height: 8px; background: #f1f5f9; border-radius: 6px; overflow: hidden; }
+    .chip { background: #eef2ff; color: #3730a3; border-radius: 999px; padding: 4px 8px; font-size: 11px; }
     .progress-bar .progress { height: 100%; background: linear-gradient(90deg, #22c55e, #16a34a); width: 0%; }
     /* Modal */
     #modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.5); padding: 20px; }
@@ -129,6 +130,9 @@
         card.innerHTML = `
           <div class="card-title">${t.title}</div>
           <div class="card-desc">${t.description}</div>
+          <div class="themes" aria-label="Temas da trilha" style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 6px;">
+            ${ (t.themes || []).slice(0,3).map(th => `<span class="chip">${th}</span>`).join('') }
+          </div>
           <div class="progress-bar" aria-label="Progresso da trilha">
             <div class="progress" style="width:${p}%;"></div>
           </div>
