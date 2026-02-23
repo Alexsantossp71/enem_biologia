@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Trilhas de Biologia – Vanilla</title>
   <style>
-    :root { --bg: #f7f9fb; --card: #fff; --border: #e5e7eb; --text: #1f2937; --muted: #6b7280; --accent: #10b981; }
+    :root { --bg: #f5f7fb; --card: #fff; --border: #e5e7eb; --text: #111827; --muted: #6b7280; --accent: #0ea5e9; }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
     header.site { padding: 16px 20px; background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
     header.site h1 { margin: 0 0 6px; font-size: 1.2rem; }
     #search { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; }
@@ -56,27 +56,27 @@
       </div>
       <div class="modal-actions">
         <button id="start-btn" class="btn">Iniciar trilha</button>
-        <button id="next-btn" class="btn">Próximo</button>
+        <button id="next-btn" class="btn">Proximo</button>
       </div>
     </div>
   </section>
 
   <script>
-    // Dados: 13 trilhas de biologia
+    // Dados: 13 trilhas de biologia (ASCII)
     const tracks = [
-      { id: 1, title: "Células e biomoléculas", description: "Conceitos básicos sobre células, organelas e biomoléculas.", duration: "20-35 min", themes: ["Células", "Biomoléculas", "Organelas"] },
-      { id: 2, title: "Genética básica", description: "Princípios de herança, alelos e genótipos.", duration: "25-40 min", themes: ["Alelos", "Genótipo", "Fenótipo"] },
-      { id: 3, title: "Evolução e seleção natural", description: "Processos que moldam a diversidade biológica.", duration: "30-45 min", themes: ["Evolução", "Seleção natural", "Adaptação"] },
-      { id: 4, title: "Ecologia e sistemas ambientais", description: "Interações entre organismos e ambientes.", duration: "20-40 min", themes: ["Ecossistemas", "Cadeias alimentares", "Ciclos biogeoquímicos"] },
-      { id: 5, title: "Genética Mendeliana", description: "Herança mendeliana, cruzamentos e probabilidades.", duration: "20-35 min", themes: ["Herança", "Cruzamentos", "Probabilidade"] },
-      { id: 6, title: "Biotecnologia básica", description: "Ferramentas básicas da biotecnologia.", duration: "25-40 min", themes: ["DNA", "Clonagem", "PCR"] },
-      { id: 7, title: "Anatomia humana", description: "Estruturas anatômicas essenciais.", duration: "30-45 min", themes: ["Esqueleto", "Músculos", "Sistema nervoso"] },
-      { id: 8, title: "Fisiologia de sistemas", description: "Funcionamento dos principais sistemas do corpo.", duration: "25-40 min", themes: ["Digestório", "Circulatório", "Respiratório"] },
-      { id: 9, title: "Biomas e ciclos biológicos", description: "Biomas e ciclos naturais da vida.", duration: "20-35 min", themes: ["Biomas", "Ciclos da água", "Biogênese"] },
-      { id: 10, title: "Reprodução e desenvolvimento", description: "Reprodução, desenvolvimento embrionário.", duration: "25-40 min", themes: ["Sexualidade", "Maturação", "Embrionário"] },
-      { id: 11, title: "Biologia molecular", description: "DNA, RNA, síntese de proteínas.", duration: "25-40 min", themes: ["DNA", "RNA", "Proteínas"] },
-      { id: 12, title: "Neurobiologia introdutória", description: "Neurônios, sinapses e funcionamento do sistema nervoso.", duration: "25-40 min", themes: ["Neurônios", "Sinapses", "Sistema nervoso"] },
-      { id: 13, title: "Microbiologia básica", description: "Micro-organismos e seus papéis.", duration: "20-35 min", themes: ["Bactérias", "Vírus", "Microrganismos"] }
+      { id: 1, title: "Celulas e biomoleculas", description: "Conceitos basicos sobre celulas, organelas e biomoleculas.", duration: "20-35 min", themes: ["Celulas","Biomoleculas","Organelas"] },
+      { id: 2, title: "Genetica basica", description: "Principios de heranca, alelos e genotipos.", duration: "25-40 min", themes: ["Alelos","Genotipo","Fenotipo"] },
+      { id: 3, title: "Evolucao e selecao natural", description: "Processos que moldam a diversidade biologica.", duration: "30-45 min", themes: ["Evolucao","Selecao natural","Aparacao"] },
+      { id: 4, title: "Ecologia e sistemas ambientais", description: "Interacoes entre organismos e ambientes.", duration: "20-40 min", themes: ["Ecossistemas","Cadeias alimentares","Ciclos biogeocimicos"] },
+      { id: 5, title: "Genetica Mendeliana", description: "Heranca mendeliana, cruzamentos e probabilidades.", duration: "20-35 min", themes: ["Heranca","Cruzamentos","Probabilidade"] },
+      { id: 6, title: "Biotecnologia basica", description: "Ferramentas basicas da biotecnologia.", duration: "25-40 min", themes: ["DNA","Clonagem","PCR"] },
+      { id: 7, title: "Anatomia humana", description: "Estruturas anatomicas essenciais.", duration: "30-45 min", themes: ["Esqueleto","Musculos","Sistema nervoso"] },
+      { id: 8, title: "Fisiologia de sistemas", description: "Funcionamento dos principais sistemas do corpo.", duration: "25-40 min", themes: ["Digestorio","Circulatorio","Respiratorio"] },
+      { id: 9, title: "Biomas e ciclos biologicos", description: "Biomas e ciclos naturais da vida.", duration: "20-35 min", themes: ["Biomas","Ciclos da Agua","Biogenez"] },
+      { id: 10, title: "Reproducao e desenvolvimento", description: "Reproducao, desenvolvimento embrionario.", duration: "25-40 min", themes: ["Sexualidade","Maturacao","Embrionario"] },
+      { id: 11, title: "Biologia molecular", description: "DNA, RNA, sintese de proteinas.", duration: "25-40 min", themes: ["DNA","RNA","Proteinas"] },
+      { id: 12, title: "Neurobiologia introdutoria", description: "Neurobiologos: neurônios e sinapses.", duration: "25-40 min", themes: ["Neuronios","Sinapses","Sistema nervoso"] },
+      { id: 13, title: "Microbiologia basica", description: "Micro-organismos e seus papeis.", duration: "20-35 min", themes: ["Bacterias","Virus","Microrganismos"] }
     ];
 
     const PROGRESS_KEY = "enem_biologia_progress"; // localStorage key
