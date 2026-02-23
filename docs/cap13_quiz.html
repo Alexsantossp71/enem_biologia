@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 13 - Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background:#f7f7f7; }
+    .container { max-width: 700px; margin: 0 auto; background:#fff; padding: 20px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="cap13_biologia.html">Voltar</a>
+    <h1>Capítulo 13 - Quiz</h1>
+    <form id="quiz-form">
+      <div class="question"><p>1) Qual é o objetivo da promoção da saúde?</p><label><input type="radio" name="q1" value="Prevenir doenças"> Prevenir doenças</label></div>
+      <div class="question"><p>2) Qual é o conceito de bem-estar?</p><label><input type="radio" name="q2" value="Condição física e mental"> Condição física e mental</label></div>
+      <div class="question"><p>3) Qual prática favorece qualidade de vida?</p><label><input type="radio" name="q3" value="Sono adequado"> Sono adequado</label></div>
+      <button type="button" id="check" class="btn">Verificar</button>
+    </form>
+    <div id="result" style="margin-top:8px;font-weight:bold;"></div>
+  </div>
+  <script>
+    document.getElementById('check').addEventListener('click', () => {
+      let score = 0;
+      const a = document.querySelector('input[name="q1"]:checked')?.value;
+      const b = document.querySelector('input[name="q2"]:checked')?.value;
+      const c = document.querySelector('input[name="q3"]:checked')?.value;
+      if (a === 'Prevenir doenças') score++;
+      if (b === 'Condição física e mental') score++;
+      if (c === 'Sono adequado') score++;
+      document.getElementById('result').textContent = `Pontuação: ${score} / 3`;
+    });
+  </script>
+</body>
+</html>
