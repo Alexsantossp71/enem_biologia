@@ -18,8 +18,9 @@
     .card-title { font-weight: 600; font-size: 15px; }
     .card-desc { font-size: 12.5px; color: var(--muted); min-height: 28px; }
     .progress-bar { height: 8px; background: #f1f5f9; border-radius: 6px; overflow: hidden; }
-    .chip { background: #eef2ff; color: #3730a3; border-radius: 999px; padding: 4px 8px; font-size: 11px; }
     .progress-bar .progress { height: 100%; background: linear-gradient(90deg, #22c55e, #16a34a); width: 0%; }
+    /* Chips de temas */
+    .chip { background: #eef2ff; color: #3730a3; border-radius: 999px; padding: 4px 8px; font-size: 11px; display: inline-block; }
     /* Modal */
     #modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.5); padding: 20px; }
     #modal[aria-hidden="false"] { display: flex; }
@@ -50,7 +51,7 @@
       <button id="close-modal" class="close" aria-label="Fechar">✕</button>
       <h2 id="modal-title"></h2>
       <p id="modal-desc"></p>
-      <ul id="modal-themes"></ul>
+      <div id="modal-themes"></div>
       <p><strong>Duração estimada:</strong> <span id="modal-duration"></span></p>
       <div class="progress-bar" aria-label="Progresso atual">
         <span id="modal-progress" style="width:0%"></span>
@@ -65,19 +66,20 @@
   <script>
     // Dados: 13 trilhas de biologia (ASCII)
     const tracks = [
-      { id: 1, title: "Celulas e biomoleculas", description: "Conceitos basicos sobre celulas, organelas e biomoleculas.", duration: "20-35 min", themes: ["Celulas","Biomoleculas","Organelas"] },
-      { id: 2, title: "Genetica basica", description: "Principios de heranca, alelos e genotipos.", duration: "25-40 min", themes: ["Alelos","Genotipo","Fenotipo"] },
-      { id: 3, title: "Evolucao e selecao natural", description: "Processos que moldam a diversidade biologica.", duration: "30-45 min", themes: ["Evolucao","Selecao natural","Aparacao"] },
-      { id: 4, title: "Ecologia e sistemas ambientais", description: "Interacoes entre organismos e ambientes.", duration: "20-40 min", themes: ["Ecossistemas","Cadeias alimentares","Ciclos biogeocimicos"] },
-      { id: 5, title: "Genetica Mendeliana", description: "Heranca mendeliana, cruzamentos e probabilidades.", duration: "20-35 min", themes: ["Heranca","Cruzamentos","Probabilidade"] },
-      { id: 6, title: "Biotecnologia basica", description: "Ferramentas basicas da biotecnologia.", duration: "25-40 min", themes: ["DNA","Clonagem","PCR"] },
-      { id: 7, title: "Anatomia humana", description: "Estruturas anatomicas essenciais.", duration: "30-45 min", themes: ["Esqueleto","Musculos","Sistema nervoso"] },
-      { id: 8, title: "Fisiologia de sistemas", description: "Funcionamento dos principais sistemas do corpo.", duration: "25-40 min", themes: ["Digestorio","Circulatorio","Respiratorio"] },
-      { id: 9, title: "Biomas e ciclos biologicos", description: "Biomas e ciclos naturais da vida.", duration: "20-35 min", themes: ["Biomas","Ciclos da Agua","Biogenez"] },
-      { id: 10, title: "Reproducao e desenvolvimento", description: "Reproducao, desenvolvimento embrionario.", duration: "25-40 min", themes: ["Sexualidade","Maturacao","Embrionario"] },
-      { id: 11, title: "Biologia molecular", description: "DNA, RNA, sintese de proteinas.", duration: "25-40 min", themes: ["DNA","RNA","Proteinas"] },
-      { id: 12, title: "Neurobiologia introdutoria", description: "Neurobiologos: neurônios e sinapses.", duration: "25-40 min", themes: ["Neuronios","Sinapses","Sistema nervoso"] },
-      { id: 13, title: "Microbiologia basica", description: "Micro-organismos e seus papeis.", duration: "20-35 min", themes: ["Bacterias","Virus","Microrganismos"] }
+      { id: 1, title: "Biologia (A Ciencia como ciencia, origens do universo e seres vivos)", description: "Conceitos basicos sobre celulas, organelas e biomoleculas.", duration: "20-35 min", themes: ["Celulas","Biomoleculas","Organelas"] },
+      { id: 2, title: "Moleculas e Celulas", description: "Principios basicos de moleculas e celulas.", duration: "25-40 min", themes: ["Celulas","Moleculas","Organelas"] },
+      { id: 3, title: "Principais Tecidos Animais e Vegetais", description: "Estruturas de tecidos em animais e plantas.", duration: "30-45 min", themes: ["Tecidos","Animais","Vegetais"] },
+      { id: 4, title: "Aspectos Bioquimicos das Estruturas Celulares", description: "Resumo bioquimico de estruturas celulares.", duration: "20-40 min", themes: ["Bioquimica","Celulas","Organelas"] },
+      { id: 5, title: "Aspectos Gerais do Metabolismo Celular", description: "Metabolismo e vias energeticas celulares.", duration: "20-35 min", themes: ["Metabolismo","Energia","Vias"] },
+      { id: 6, title: "Codificacao da Informacao Genetica", description: "Codigo genetico e expresao genetica.", duration: "25-40 min", themes: ["DNA","RNA","Proteinas"] },
+      { id: 7, title: "Identidade dos Seres Vivos", description: "Caracteristicas basicas que definem seres vivos.", duration: "30-45 min", themes: ["Vida","Classificacao","Organismos"] },
+      { id: 8, title: "Diversidade dos seres vivos (Focado em Botanica e Animais)", description: "Diversidade entre plantas e animais.", duration: "20-35 min", themes: ["Botanica","Zoologia","Diversidade"] },
+      { id: 9, title: "Morfologia e Fisiologia Animal Comparada", description: "Morfologia e funcao de animais comparada.", duration: "25-40 min", themes: ["Morfologia","Fisiologia","Comparacao"] },
+      { id: 10, title: "Genetica", description: "Heranca, cruzamentos e mapeamento genetico.", duration: "20-35 min", themes: ["Heranca","Cruzamentos","Mapa genetico"] },
+      { id: 11, title: "Evolucao", description: "Processos evolutivos e evidencias.", duration: "30-45 min", themes: ["Evolucao","Selecao","Adaptação"] },
+      { id: 12, title: "Ecologia", description: "Ecologia de populacoes e interacoes ecologicas.", duration: "20-40 min", themes: ["Ecossistemas","Interacao","Cadeias alimentares"] },
+      { id: 13, title: "Qualidade de Vida", description: "Conceitos de saude e bem-estar biologico.", duration: "15-30 min", themes: ["Saude","Vida","Bem-estar"] },
+      { id: 14, title: "Capitulo 1: Ciencia da Biologia", description: "Conteudo do Capitulo 1", duration: "60-90 min", themes: ["Capitulo1","Biologia"] }
     ];
 
     const PROGRESS_KEY = "enem_biologia_progress"; // localStorage key
@@ -145,12 +147,13 @@
       currentTrackId = track.id;
       document.getElementById("modal-title").textContent = track.title;
       document.getElementById("modal-desc").textContent = track.description;
-      const ul = document.getElementById("modal-themes");
-      ul.innerHTML = "";
+      const divThemes = document.getElementById("modal-themes");
+      divThemes.innerHTML = "";
       (track.themes || []).forEach(th => {
-        const li = document.createElement("li");
-        li.textContent = th;
-        ul.appendChild(li);
+        const span = document.createElement("span");
+        span.className = "chip";
+        span.textContent = th;
+        divThemes.appendChild(span);
       });
       document.getElementById("modal-duration").textContent = track.duration;
       updateModalProgress();
