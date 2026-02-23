@@ -169,28 +169,43 @@
       currentTrackId = null;
     }
 
-    // Helpers: map track -> lesson page path
+    // Helpers: map track -> lesson page path (capX_biologia.html if exists)
     function mapTrackToPage(id) {
       const map = {
         1: "/enem_biologia/cap1_biologia.html",
-        14: "/enem_biologia/cap1_biologia.html",
         2: "/enem_biologia/cap2_biologia.html",
-        15: "/enem_biologia/cap2_biologia.html",
         3: "/enem_biologia/cap3_biologia.html"
       };
-      return map[id] || null;
+      if (map[id]) return map[id];
+      // fallback: try implicit naming (capN_biologia.html)
+      const guess = "/enem_biologia/cap" + id + "_biologia.html";
+      return guess;
     }
 
     // Event handlers para o modal
     document.getElementById("start-btn").addEventListener("click", () => {
       const tpath = mapTrackToPage(currentTrackId);
       if (tpath) {
-        window.location.href = tpath;
-        return;
+        fetch(tpath, { method: 'HEAD' })
+          .then(res => {
+            if (res.ok) {
+              window.location.href = tpath;
+            } else {
+              if (currentTrackId != null) setProgress(currentTrackId, 0);
+              renderGrid();
+              updateModalProgress();
+            }
+          })
+          .catch(() => {
+            if (currentTrackId != null) setProgress(currentTrackId, 0);
+            renderGrid();
+            updateModalProgress();
+          });
+      } else {
+        if (currentTrackId != null) setProgress(currentTrackId, 0);
+        renderGrid();
+        updateModalProgress();
       }
-      if (currentTrackId != null) setProgress(currentTrackId, 0);
-      renderGrid();
-      updateModalProgress();
     });
     document.getElementById("next-btn").addEventListener("click", () => {
       if (currentTrackId != null) setProgress(currentTrackId, getProgress(currentTrackId) + 25);
