@@ -1,7 +1,200 @@
-<html>
-  <body>
-    <h1>
-      Teste docs
-    </h1>
-  </body>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trilhas de Biologia – Vanilla</title>
+  <style>
+    :root { --bg: #f5f7fb; --card: #fff; --border: #e5e7eb; --text: #111827; --muted: #6b7280; --accent: #0ea5e9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+    header.site { padding: 16px 20px; background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    header.site h1 { margin: 0 0 6px; font-size: 1.2rem; }
+    #search { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; }
+    main.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; padding: 20px; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; cursor: pointer; transition: transform .15s ease, box-shadow .2s; }
+    .card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .card-title { font-weight: 600; font-size: 15px; }
+    .card-desc { font-size: 12.5px; color: var(--muted); min-height: 28px; }
+    .progress-bar { height: 8px; background: #f1f5f9; border-radius: 6px; overflow: hidden; }
+    .progress-bar .progress { height: 100%; background: linear-gradient(90deg, #22c55e, #16a34a); width: 0%; }
+    /* Modal */
+    #modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.5); padding: 20px; }
+    #modal[aria-hidden="false"] { display: flex; }
+    .modal-content { background: #fff; border-radius: 12px; padding: 20px; max-width: 640px; width: 100%; position: relative; }
+    .close { position: absolute; top: 8px; right: 8px; border: none; background: transparent; font-size: 14px; cursor: pointer; }
+    #modal-title { margin: 0 0 6px; font-size: 1.25rem; }
+    #modal-desc { color: #374151; margin: 0 0 6px; }
+    #modal-themes { margin: 6px 0 12px; padding-left: 20px; }
+    #modal-duration { margin: 0 0 6px; }
+    #modal-progress { display: block; height: 8px; width: 0%; background: #e5e7eb; border-radius: 6px; }
+    .modal-actions { display: flex; gap: 8px; margin-top: 8px; }
+    .btn { padding: 8px 12px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; }
+    .btn:hover { background: #f3f4f6; }
+    @media (max-width: 600px) {
+      main.grid { padding: 12px; grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <h1>Trilhas de Biologia</h1>
+    <input id="search" type="search" placeholder="Buscar trilhas..." aria-label="Buscar trilhas">
+  </header>
+  <main class="grid" id="grid"></main>
+
+  <section id="modal" aria-hidden="true" role="dialog" aria-label="Detalhes da trilha" class="modal" >
+    <div class="modal-content">
+      <button id="close-modal" class="close" aria-label="Fechar">✕</button>
+      <h2 id="modal-title"></h2>
+      <p id="modal-desc"></p>
+      <ul id="modal-themes"></ul>
+      <p><strong>Duração estimada:</strong> <span id="modal-duration"></span></p>
+      <div class="progress-bar" aria-label="Progresso atual">
+        <span id="modal-progress" style="width:0%"></span>
+      </div>
+      <div class="modal-actions">
+        <button id="start-btn" class="btn">Iniciar trilha</button>
+        <button id="next-btn" class="btn">Proximo</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Dados: 13 trilhas de biologia (ASCII)
+    const tracks = [
+      { id: 1, title: "Celulas e biomoleculas", description: "Conceitos basicos sobre celulas, organelas e biomoleculas.", duration: "20-35 min", themes: ["Celulas","Biomoleculas","Organelas"] },
+      { id: 2, title: "Genetica basica", description: "Principios de heranca, alelos e genotipos.", duration: "25-40 min", themes: ["Alelos","Genotipo","Fenotipo"] },
+      { id: 3, title: "Evolucao e selecao natural", description: "Processos que moldam a diversidade biologica.", duration: "30-45 min", themes: ["Evolucao","Selecao natural","Aparacao"] },
+      { id: 4, title: "Ecologia e sistemas ambientais", description: "Interacoes entre organismos e ambientes.", duration: "20-40 min", themes: ["Ecossistemas","Cadeias alimentares","Ciclos biogeocimicos"] },
+      { id: 5, title: "Genetica Mendeliana", description: "Heranca mendeliana, cruzamentos e probabilidades.", duration: "20-35 min", themes: ["Heranca","Cruzamentos","Probabilidade"] },
+      { id: 6, title: "Biotecnologia basica", description: "Ferramentas basicas da biotecnologia.", duration: "25-40 min", themes: ["DNA","Clonagem","PCR"] },
+      { id: 7, title: "Anatomia humana", description: "Estruturas anatomicas essenciais.", duration: "30-45 min", themes: ["Esqueleto","Musculos","Sistema nervoso"] },
+      { id: 8, title: "Fisiologia de sistemas", description: "Funcionamento dos principais sistemas do corpo.", duration: "25-40 min", themes: ["Digestorio","Circulatorio","Respiratorio"] },
+      { id: 9, title: "Biomas e ciclos biologicos", description: "Biomas e ciclos naturais da vida.", duration: "20-35 min", themes: ["Biomas","Ciclos da Agua","Biogenez"] },
+      { id: 10, title: "Reproducao e desenvolvimento", description: "Reproducao, desenvolvimento embrionario.", duration: "25-40 min", themes: ["Sexualidade","Maturacao","Embrionario"] },
+      { id: 11, title: "Biologia molecular", description: "DNA, RNA, sintese de proteinas.", duration: "25-40 min", themes: ["DNA","RNA","Proteinas"] },
+      { id: 12, title: "Neurobiologia introdutoria", description: "Neurobiologos: neurônios e sinapses.", duration: "25-40 min", themes: ["Neuronios","Sinapses","Sistema nervoso"] },
+      { id: 13, title: "Microbiologia basica", description: "Micro-organismos e seus papeis.", duration: "20-35 min", themes: ["Bacterias","Virus","Microrganismos"] }
+    ];
+
+    const PROGRESS_KEY = "enem_biologia_progress"; // localStorage key
+    let progress = {};
+    let currentTrackId = null;
+
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem(PROGRESS_KEY);
+        progress = raw ? JSON.parse(raw) : {};
+      } catch {
+        progress = {};
+      }
+    }
+    function saveProgress() {
+      localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+    }
+    function getProgress(id) {
+      return progress[id] ?? 0;
+    }
+    function setProgress(id, value) {
+      const v = Math.max(0, Math.min(100, value ?? 0));
+      progress[id] = v;
+      saveProgress();
+      updateCardProgress(id);
+      if (currentTrackId === id) updateModalProgress();
+    }
+    function updateCardProgress(id) {
+      const card = document.querySelector(`.card[data-id="${id}"]`);
+      if (!card) return;
+      const bar = card.querySelector(".progress-bar .progress");
+      const p = getProgress(id);
+      if (bar) bar.style.width = p + "%";
+    }
+    function updateModalProgress() {
+      const p = getProgress(currentTrackId);
+      const el = document.getElementById("modal-progress");
+      el.style.width = p + "%";
+    }
+
+    // Renderização
+    function renderGrid() {
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+      tracks.forEach(t => {
+        const p = getProgress(t.id);
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.id = t.id;
+        card.innerHTML = `
+          <div class="card-title">${t.title}</div>
+          <div class="card-desc">${t.description}</div>
+          <div class="progress-bar" aria-label="Progresso da trilha">
+            <div class="progress" style="width:${p}%;"></div>
+          </div>
+        `;
+        card.addEventListener("click", () => openModal(t));
+        grid.appendChild(card);
+      });
+    }
+    function openModal(track) {
+      currentTrackId = track.id;
+      document.getElementById("modal-title").textContent = track.title;
+      document.getElementById("modal-desc").textContent = track.description;
+      const ul = document.getElementById("modal-themes");
+      ul.innerHTML = "";
+      (track.themes || []).forEach(th => {
+        const li = document.createElement("li");
+        li.textContent = th;
+        ul.appendChild(li);
+      });
+      document.getElementById("modal-duration").textContent = track.duration;
+      updateModalProgress();
+      const modal = document.getElementById("modal");
+      modal.style.display = "flex";
+      modal.setAttribute("aria-hidden", "false");
+    }
+    function closeModal() {
+      const modal = document.getElementById("modal");
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+      currentTrackId = null;
+    }
+
+    // Event handlers para o modal
+    document.getElementById("start-btn").addEventListener("click", () => {
+      if (currentTrackId != null) setProgress(currentTrackId, 0);
+      renderGrid();
+      updateModalProgress();
+    });
+    document.getElementById("next-btn").addEventListener("click", () => {
+      if (currentTrackId != null) setProgress(currentTrackId, getProgress(currentTrackId) + 25);
+      renderGrid();
+      updateModalProgress();
+    });
+    document.getElementById("close-modal").addEventListener("click", closeModal);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    // Busca
+    document.getElementById("search").addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll(".card").forEach(card => {
+        const id = parseInt(card.dataset.id, 10);
+        const t = tracks.find(x => x.id === id);
+        const text = (t.title + " " + t.description + " " + (t.themes || []).join(" ")).toLowerCase();
+        card.style.display = text.includes(q) ? "block" : "none";
+      });
+    });
+
+    // Init
+    loadProgress();
+    renderGrid();
+    // Fechar modal com click fora do conteúdo (opcional)
+    document.getElementById("modal").addEventListener("click", (e) => {
+      if (e.target.id === "modal") closeModal();
+    });
+  </script>
+</body>
 </html>
