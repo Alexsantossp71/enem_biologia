@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cap. 8: O Vírus Que Pode Salvar o Mundo — Jogo da Memória. O Arquivo Éris, Biologia ENEM.">
+  <title>O Vírus Que Pode Salvar o Mundo — Jogo da Memória | O Arquivo Éris</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <script src="../js/data.js"></script>
+  <script src="../js/components.js"></script>
+  
+    <div id="app"></div>
+    <script>
+      const CH = 8;
+      const ch = getChapter(CH);
+      let memCards = [], flippedCards = [], matchedPairs = 0, moves = 0, totalPairs = ch.memory.length, locked = false;
+
+      function shuffle(arr) { for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+
+      function initGame() {
+        memCards = []; flippedCards = []; matchedPairs = 0; moves = 0; locked = false;
+        ch.memory.forEach((pair, i) => {
+          memCards.push({ id: 'term-'+i, pairId: i, text: pair.term, type: 'term' });
+          memCards.push({ id: 'def-'+i, pairId: i, text: pair.definition, type: 'def' });
+        });
+        shuffle(memCards);
+        renderGame();
+      }
+
+      function renderGame() {
+        let gridHTML = memCards.map((c, idx) => {
+          const isFlipped = flippedCards.includes(idx);
+          const isMatched = c.matched;
+          return '<div class="memory-card' + (isFlipped ? ' flipped' : '') + (isMatched ? ' matched' : '') + '" onclick="flipCard('+idx+')">' +
+            '<div class="memory-card-inner">' +
+            '<div class="memory-card-face memory-card-back"><div class="mem-icon">🧬</div></div>' +
+            '<div class="memory-card-face memory-card-front">' + c.text + '</div>' +
+            '</div></div>';
+        }).join('');
+
+        document.getElementById('app').innerHTML =
+          renderBackground() + renderNavbar(CH) +
+          renderPageHeader(CH, '🧠 Jogo da Memória') +
+          renderActivityTabs(CH, 'memoria') +
+          '<div class="content-container"><div class="memory-game-container">' +
+          '<div class="memory-stats">' +
+          '<div class="stat">Movimentos: <span class="stat-value">' + moves + '</span></div>' +
+          '<div class="stat">Pares: <span class="stat-value">' + matchedPairs + '/' + totalPairs + '</span></div></div>' +
+          '<div class="memory-grid">' + gridHTML + '</div>' +
+          (matchedPairs === totalPairs ? '<div class="memory-complete show"><h3>🎉 Parabéns!</h3><p>Você completou em ' + moves + ' movimentos!</p><button class="btn-reset" onclick="initGame()">🔄 Jogar Novamente</button></div>' : '') +
+          '<div style="text-align:center;"><button class="btn-reset" onclick="initGame()">🔄 Reiniciar</button></div>' +
+          '</div></div>' + renderFooter();
+      }
+
+      function flipCard(idx) {
+        if(locked || flippedCards.includes(idx) || memCards[idx].matched) return;
+        flippedCards.push(idx);
+        renderGame();
+        if(flippedCards.length === 2) {
+          locked = true; moves++;
+          const [a, b] = flippedCards;
+          if(memCards[a].pairId === memCards[b].pairId && memCards[a].type !== memCards[b].type) {
+            memCards[a].matched = true; memCards[b].matched = true;
+            matchedPairs++; flippedCards = []; locked = false;
+            setTimeout(renderGame, 300);
+          } else {
+            setTimeout(() => { flippedCards = []; locked = false; renderGame(); }, 1200);
+          }
+        }
+      }
+
+      initGame();
+    </script>
+</body>
+</html>
