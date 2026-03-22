@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 4 - Quiz</title>
+  <meta name="description" content="Quiz do Capítulo 4: Biologia como Ciência. Teste seus conhecimentos sobre origem da biologia, universo, Terra e métodos científicos.">
+  <link rel="canonical" href="./cap4_quiz.html">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --border-color: #e5e7eb;
+      --text-color: #111;
+      --radius: 8px;
+    }
+    body { font-family: Arial, Helvetica, sans-serif; padding: 20px; background: var(--bg-color); }
+    .container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 20px; border-radius: var(--radius); }
+    h1 { margin: 0 0 12px; }
+    .question { margin: 12px 0; }
+    .btn { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #eee; cursor: pointer; color: var(--text-color); }
+    .btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    .result { margin-top: 12px; font-weight: bold; }
+    fieldset { border: none; padding: 0; margin: 0; }
+    legend { font-weight: bold; margin-bottom: 8px; }
+    label { display: block; margin: 4px 0; cursor: pointer; }
+    input:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    #skip-link { position: absolute; top: -40px; left: 0; background: var(--primary-color); color: white; padding: 8px; z-index: 100; text-decoration: none; }
+    #skip-link:focus { top: 0; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" id="skip-link">Pular para conteúdo principal</a>
+  <main id="main-content">
+    <nav aria-label="Navegação do capítulo">
+      <a href="cap4_biologia.html">← Voltar para conteúdo</a>
+    </nav>
+    <div class="container">
+      <h1>Capítulo 4 - Quiz</h1>
+      <form id="quiz-form">
+        <fieldset>
+          <legend>1) Qual é a origem etimológica da palavra "Biologia"?</legend>
+          <label><input type="radio" name="q1" value="bios_logos"> Bios (vida) + logos (estudo)</label>
+          <label><input type="radio" name="q1" value="bio_logia"> Bio (vida) + logia (ciência)</label>
+          <label><input type="radio" name="q1" value="vita_scientia"> Vita (vida) + scientia (conhecimento)</label>
+        </fieldset>
+        <fieldset>
+          <legend>2) Qual modelo cosmológico foi proposto por Copérnico?</legend>
+          <label><input type="radio" name="q2" value="geocentrico"> Geocêntrico (Terra no centro)</label>
+          <label><input type="radio" name="q2" value="heliocentrico"> Heliocêntrico (Sol no centro)</label>
+          <label><input type="radio" name="q2" value="big_bang"> Big Bang (expansão do universo)</label>
+        </fieldset>
+        <fieldset>
+          <legend>3) Quem realizou o experimento que refutou a geração espontânea de larvas?</legend>
+          <label><input type="radio" name="q3" value="pasteur"> Louis Pasteur</label>
+          <label><input type="radio" name="q3" value="redi"> Francesco Redi</label>
+          <label><input type="radio" name="q3" value="miller"> Stanley Miller</label>
+        </fieldset>
+        <fieldset>
+          <legend>4) Qual experimento simulou a atmosfera primitiva para produzir aminoácidos?</legend>
+          <label><input type="radio" name="q4" value="redi"> Experimento de Redi</label>
+          <label><input type="radio" name="q4" value="miller"> Experimento de Miller-Urey</label>
+          <label><input type="radio" name="q4" value="pasteur"> Experimento de Pasteur</label>
+        </fieldset>
+        <fieldset>
+          <legend>5) Qual é a idade estimada da Terra?</legend>
+          <label><input type="radio" name="q5" value="milhoes"> 20-40 milhões de anos</label>
+          <label><input type="radio" name="q5" value="bilhoes"> 4,5 bilhões de anos</label>
+          <label><input type="radio" name="q5" value="mil"> 6.000 anos</label>
+        </fieldset>
+        <button type="button" class="btn" id="submit-quiz" aria-label="Verificar respostas do quiz">Verificar</button>
+      </form>
+      <div class="result" id="quiz-result" aria-live="polite" aria-atomic="true"></div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('submit-quiz').addEventListener('click', () => {
+      let score = 0;
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+      const q4 = document.querySelector('input[name="q4"]:checked')?.value;
+      const q5 = document.querySelector('input[name="q5"]:checked')?.value;
+      
+      if (q1 === 'bios_logos') score++;
+      if (q2 === 'heliocentrico') score++;
+      if (q3 === 'redi') score++;
+      if (q4 === 'miller') score++;
+      if (q5 === 'bilhoes') score++;
+      
+      document.getElementById('quiz-result').textContent = `Pontuação: ${score} / 5`;
+    });
+  </script>
+</body>
+</html>

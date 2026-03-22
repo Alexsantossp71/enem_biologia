@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 8 - Flashcards</title>
+  <meta name="description" content="Flashcards do Capítulo 8: Diversidade dos Seres Vivos. Revise conceitos sobre biodiversidade e os cinco reinos.">
+  <link rel="canonical" href="./cap8_flashcards.html">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --accent-color: #4f46e5;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --border-color: #e5e7eb;
+      --text-color: #111;
+      --radius: 8px;
+    }
+    body { font-family: Arial, Helvetica, sans-serif; background:var(--bg-color); padding:20px; }
+    .wrap{ max-width:800px; margin:0 auto; background:var(--card-bg); padding:20px; border-radius:var(--radius); }
+    .card{ width:150px; height:180px; perspective:1000px; float:left; margin:8px; }
+    .inner{ width:100%; height:100%; position:relative; transform-style:preserve-3d; transition: transform .6s; cursor:default; }
+    .front, .back{ position:absolute; width:100%; height:100%; backface-visibility:hidden; display:flex; align-items:center; justify-content:center; border-radius:6px; }
+    .front{ background:var(--accent-color); color:white; }
+    .back{ background:#f3f4f6; color:var(--text-color); transform: rotateY(180deg); }
+    .inner.flipped{ transform: rotateY(180deg); }
+    .title{ font-weight:600; text-align:center; }
+    .clear{ clear:both; }
+    button.flashcard-btn { background: none; border: none; padding: 0; cursor: pointer; }
+    button.flashcard-btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    button.flashcard-btn:focus-visible .inner { box-shadow: 0 0 0 2px var(--primary-color); }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    #skip-link { position: absolute; top: -40px; left: 0; background: var(--primary-color); color: white; padding: 8px; z-index: 100; text-decoration: none; }
+    #skip-link:focus { top: 0; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" id="skip-link">Pular para conteúdo principal</a>
+  <main id="main-content">
+    <nav aria-label="Navegação do capítulo">
+      <a href="cap8_biologia.html">← Voltar para conteúdo</a>
+    </nav>
+    <div class="wrap">
+      <h1>Capítulo 8 - Flashcards</h1>
+      <p>Cartões para revisão rápida de conceitos-chave. Clique para virar.</p>
+      <div class="cards">
+        <button class="flashcard-btn" onclick="flipCard(this)" aria-label="Biodiversidade - Clique para ver a resposta">
+          <div class="card"><div class="inner"><div class="front"><div class="title">Biodiversidade</div></div><div class="back">Variedade de espécies e ecossistemas</div></div></div>
+        </button>
+        <button class="flashcard-btn" onclick="flipCard(this)" aria-label="Monera - Clique para ver a resposta">
+          <div class="card"><div class="inner"><div class="front"><div class="title">Monera</div></div><div class="back">Bactérias e cianobactérias (unicelulares)</div></div></div>
+        </button>
+        <button class="flashcard-btn" onclick="flipCard(this)" aria-label="Protista - Clique para ver a resposta">
+          <div class="card"><div class="inner"><div class="front"><div class="title">Protista</div></div><div class="back">Protozoários e algas (unicelulares eucariotos)</div></div></div>
+        </button>
+        <button class="flashcard-btn" onclick="flipCard(this)" aria-label="Fungi - Clique para ver a resposta">
+          <div class="card"><div class="inner"><div class="front"><div class="title">Fungi</div></div><div class="back">Fungos (decompositores)</div></div></div>
+        </button>
+        <button class="flashcard-btn" onclick="flipCard(this)" aria-label="Plantae - Clique para ver a resposta">
+          <div class="card"><div class="inner"><div class="front"><div class="title">Plantae</div></div><div class="back">Plantas (fotossintetizantes)</div></div></div>
+        </button>
+        <button class="flashcard-btn" onclick="flipCard(this)" aria-label="Animalia - Clique para ver a resposta">
+          <div class="card"><div class="inner"><div class="front"><div class="title">Animalia</div></div><div class="back">Animais (heterotróficos multicelulares)</div></div></div>
+        </button>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </main>
+  <script>
+    function flipCard(btn){
+      const inner = btn.querySelector('.inner');
+      inner.classList.toggle('flipped');
+    }
+  </script>
+</body>
+</html>

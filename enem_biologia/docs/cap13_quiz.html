@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 13 - Quiz</title>
+  <meta name="description" content="Quiz do Capítulo 13: Qualidade de Vida. Teste seus conhecimentos sobre saúde, bem-estar e estilo de vida.">
+  <link rel="canonical" href="./cap13_quiz.html">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --border-color: #e5e7eb;
+      --text-color: #111;
+      --radius: 8px;
+    }
+    body { font-family: Arial, sans-serif; padding: 20px; background:var(--bg-color); }
+    .container { max-width: 800px; margin: 0 auto; background:var(--card-bg); padding: 20px; border-radius: var(--radius); }
+    .question { margin: 12px 0; }
+    .btn { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #eee; cursor: pointer; }
+    .btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    fieldset { border: none; padding: 0; margin: 0; }
+    legend { font-weight: bold; margin-bottom: 8px; }
+    label { display: block; margin: 4px 0; cursor: pointer; }
+    input:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    #skip-link { position: absolute; top: -40px; left: 0; background: var(--primary-color); color: white; padding: 8px; z-index: 100; text-decoration: none; }
+    #skip-link:focus { top: 0; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" id="skip-link">Pular para conteúdo principal</a>
+  <main id="main-content">
+    <nav aria-label="Navegação do capítulo">
+      <a href="cap13_biologia.html">← Voltar para conteúdo</a>
+    </nav>
+    <div class="container">
+      <h1>Capítulo 13 - Quiz</h1>
+      <form id="quiz-form">
+        <fieldset>
+          <legend>1) Qual é o objetivo da promoção da saúde?</legend>
+          <label><input type="radio" name="q1" value="Prevenir doenças"> Prevenir doenças</label>
+        </fieldset>
+        <fieldset>
+          <legend>2) Qual é o conceito de bem-estar?</legend>
+          <label><input type="radio" name="q2" value="Condição física e mental"> Condição física e mental</label>
+        </fieldset>
+        <fieldset>
+          <legend>3) Qual prática favorece qualidade de vida?</legend>
+          <label><input type="radio" name="q3" value="Sono adequado"> Sono adequado</label>
+        </fieldset>
+        <button type="button" id="check" class="btn" aria-label="Verificar respostas do quiz">Verificar</button>
+      </form>
+      <div id="result" aria-live="polite" aria-atomic="true"></div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('check').addEventListener('click', () => {
+      let score = 0;
+      const a = document.querySelector('input[name="q1"]:checked')?.value;
+      const b = document.querySelector('input[name="q2"]:checked')?.value;
+      const c = document.querySelector('input[name="q3"]:checked')?.value;
+      if (a === 'Prevenir doenças') score++;
+      if (b === 'Condição física e mental') score++;
+      if (c === 'Sono adequado') score++;
+      document.getElementById('result').textContent = `Pontuação: ${score} / 3`;
+    });
+  </script>
+</body>
+</html>

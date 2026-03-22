@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trilhas de Biologia – Vanilla</title>
+  <meta name="description" content="Plataforma de estudos para ENEM Biologia com 13 trilhas de conhecimento, incluindo células, genética, evolução, ecologia e muito mais.">
+  <meta property="og:title" content="Trilhas de Biologia - ENEM">
+  <meta property="og:description" content="Estude para o ENEM com nossas trilhas interativas de biologia. 13 capítulos com quiz, flashcards e jogos da memória.">
+  <meta property="og:image" content="./preview.jpg">
+  <meta property="og:url" content="./">
+  <link rel="canonical" href="./">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --bg-color: #f7f9fb;
+      --card-bg: #fff;
+      --border-color: #e5e7eb;
+      --text-color: #1f2937;
+      --muted-color: #6b7280;
+      --radius: 8px;
+    }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:var(--bg-color); }
+    header.site { padding: 16px 20px; background:#fff; border-bottom:1px solid var(--border-color); position: sticky; top:0; z-index:10; }
+    header.site h1 { margin:0; font-size:1.2rem; }
+    #quick-links { padding: 12px 20px; }
+    #quick-links ul { columns: 2; column-gap: 2em; padding:0; }
+    #grid { padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:14px; }
+    .card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius); padding:12px; text-align:left; }
+    .card a { text-decoration: none; color: var(--text-color); font-weight:600; }
+    .card a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    /* Skip link for accessibility */
+    #skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--primary-color);
+      color: white;
+      padding: 8px;
+      z-index: 100;
+      text-decoration: none;
+    }
+    #skip-link:focus {
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link" id="skip-link">Pular para conteúdo principal</a>
+  <header class="site">
+    <h1>Trilhas de Biologia</h1>
+  </header>
+  <main id="main-content">
+    <nav aria-label="Links rápidos para capítulos">
+      <section id="quick-links">
+        <h2>Trilhas rápidas</h2>
+        <ul>
+          <li><a href="cap1_biologia.html">Capítulo 1</a></li>
+          <li><a href="cap2_biologia.html">Capítulo 2</a></li>
+          <li><a href="cap3_biologia.html">Capítulo 3</a></li>
+          <li><a href="cap4_biologia.html">Capítulo 4</a></li>
+          <li><a href="cap5_biologia.html">Capítulo 5</a></li>
+          <li><a href="cap6_biologia.html">Capítulo 6</a></li>
+          <li><a href="cap7_biologia.html">Capítulo 7</a></li>
+          <li><a href="cap8_biologia.html">Capítulo 8</a></li>
+          <li><a href="cap9_biologia.html">Capítulo 9</a></li>
+          <li><a href="cap10_biologia.html">Capítulo 10</a></li>
+          <li><a href="cap11_biologia.html">Capítulo 11</a></li>
+          <li><a href="cap12_biologia.html">Capítulo 12</a></li>
+          <li><a href="cap13_biologia.html">Capítulo 13</a></li>
+        </ul>
+      </section>
+    </nav>
+    
+    <section aria-label="Grid de capítulos disponíveis">
+      <div id="grid">
+        <div class="card"><a href="cap1_biologia.html">Capítulo 1</a></div>
+        <div class="card"><a href="cap2_biologia.html">Capítulo 2</a></div>
+        <div class="card"><a href="cap3_biologia.html">Capítulo 3</a></div>
+        <div class="card"><a href="cap4_biologia.html">Capítulo 4</a></div>
+        <div class="card"><a href="cap5_biologia.html">Capítulo 5</a></div>
+        <div class="card"><a href="cap6_biologia.html">Capítulo 6</a></div>
+        <div class="card"><a href="cap7_biologia.html">Capítulo 7</a></div>
+        <div class="card"><a href="cap8_biologia.html">Capítulo 8</a></div>
+        <div class="card"><a href="cap9_biologia.html">Capítulo 9</a></div>
+        <div class="card"><a href="cap10_biologia.html">Capítulo 10</a></div>
+        <div class="card"><a href="cap11_biologia.html">Capítulo 11</a></div>
+        <div class="card"><a href="cap12_biologia.html">Capítulo 12</a></div>
+        <div class="card"><a href="cap13_biologia.html">Capítulo 13</a></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Mapeamento de recursos por capítulo
+    const chapterResources = {
+      1: { quiz: true, flashcards: true, memory: false },
+      2: { quiz: true, flashcards: true, memory: false },
+      3: { quiz: true, flashcards: true, memory: false },
+      4: { quiz: true, flashcards: true, memory: false },
+      5: { quiz: true, flashcards: true, memory: false },
+      6: { quiz: false, flashcards: false, memory: false },
+      7: { quiz: false, flashcards: false, memory: false },
+      8: { quiz: false, flashcards: false, memory: false },
+      9: { quiz: true, flashcards: true, memory: true },
+      10: { quiz: true, flashcards: true, memory: true },
+      11: { quiz: true, flashcards: true, memory: true },
+      12: { quiz: true, flashcards: true, memory: true },
+      13: { quiz: true, flashcards: true, memory: true }
+    };
+
+    // Adicionar ícones aos cards após carregamento
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('#grid .card');
+      cards.forEach(card => {
+        const link = card.querySelector('a');
+        if (!link) return;
+        
+        const match = link.textContent.match(/Capítulo (\d+)/);
+        if (!match) return;
+        
+        const chapterNum = parseInt(match[1]);
+        const resources = chapterResources[chapterNum];
+        if (!resources) return;
+        
+        // Criar container de ícones
+        const iconContainer = document.createElement('div');
+        iconContainer.className = 'resource-icons';
+        iconContainer.style.marginTop = '4px';
+        iconContainer.style.fontSize = '12px';
+        iconContainer.style.color = 'var(--muted-color)';
+        iconContainer.style.display = 'flex';
+        iconContainer.style.gap = '4px';
+        iconContainer.style.justifyContent = 'center';
+        
+        // Adicionar ícones
+        if (resources.quiz) {
+          const quizIcon = document.createElement('span');
+          quizIcon.textContent = '❓';
+          quizIcon.title = 'Quiz disponível';
+          iconContainer.appendChild(quizIcon);
+        }
+        
+        if (resources.flashcards) {
+          const flashIcon = document.createElement('span');
+          flashIcon.textContent = '📇';
+          flashIcon.title = 'Flashcards disponíveis';
+          iconContainer.appendChild(flashIcon);
+        }
+        
+        if (resources.memory) {
+          const memoryIcon = document.createElement('span');
+          memoryIcon.textContent = '🧠';
+          memoryIcon.title = 'Jogo da memória disponível';
+          iconContainer.appendChild(memoryIcon);
+        }
+        
+        // Adicionar após o link
+        card.appendChild(iconContainer);
+      });
+    });
+  </script>
+</body>
+</html>

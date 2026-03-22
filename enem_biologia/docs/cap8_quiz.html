@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 8 - Quiz</title>
+  <meta name="description" content="Quiz do Capítulo 8: Diversidade dos Seres Vivos. Teste seus conhecimentos sobre a biodiversidade.">
+  <link rel="canonical" href="./cap8_quiz.html">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --border-color: #e5e7eb;
+      --text-color: #111;
+      --radius: 8px;
+    }
+    body { font-family: Arial, Helvetica, sans-serif; padding: 20px; background: var(--bg-color); }
+    .container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 20px; border-radius: var(--radius); }
+    h1 { margin: 0 0 12px; }
+    .question { margin: 12px 0; }
+    .btn { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #eee; cursor: pointer; color: var(--text-color); }
+    .btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    .result { margin-top: 12px; font-weight: bold; }
+    fieldset { border: none; padding: 0; margin: 0; }
+    legend { font-weight: bold; margin-bottom: 8px; }
+    label { display: block; margin: 4px 0; cursor: pointer; }
+    input:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    #skip-link { position: absolute; top: -40px; left: 0; background: var(--primary-color); color: white; padding: 8px; z-index: 100; text-decoration: none; }
+    #skip-link:focus { top: 0; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" id="skip-link">Pular para conteúdo principal</a>
+  <main id="main-content">
+    <nav aria-label="Navegação do capítulo">
+      <a href="cap8_biologia.html">← Voltar para conteúdo</a>
+    </nav>
+    <div class="container">
+      <h1>Capítulo 8 - Quiz</h1>
+      <form id="quiz-form">
+        <fieldset>
+          <legend>1) Qual é a importância da biodiversidade?</legend>
+          <label><input type="radio" name="q1" value="Apenas estética"> Apenas estética</label>
+          <label><input type="radio" name="q1" value="Equilíbrio ecológico"> Equilíbrio ecológico e serviços ambientais</label>
+          <label><input type="radio" name="q1" value="Não tem importância"> Não tem importância</label>
+        </fieldset>
+        <fieldset>
+          <legend>2) O que são os cinco reinos dos seres vivos?</legend>
+          <label><input type="radio" name="q2" value="Reinos políticos"> Classificação política dos países</label>
+          <label><input type="radio" name="q2" value="Monera, Protista, Fungi, Plantae, Animalia"> Monera, Protista, Fungi, Plantae, Animalia</label>
+          <label><input type="radio" name="q2" value="Animal, Vegetal, Mineral"> Animal, Vegetal, Mineral</label>
+        </fieldset>
+        <fieldset>
+          <legend>3) Qual reino inclui organismos que fazem fotossíntese?</legend>
+          <label><input type="radio" name="q3" value="Animalia"> Animalia</label>
+          <label><input type="radio" name="q3" value="Plantae"> Plantae</label>
+          <label><input type="radio" name="q3" value="Fungi"> Fungi</label>
+        </fieldset>
+        <button type="button" class="btn" id="submit-quiz" aria-label="Verificar respostas do quiz">Verificar</button>
+      </form>
+      <div class="result" id="quiz-result" aria-live="polite" aria-atomic="true"></div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('submit-quiz').addEventListener('click', () => {
+      let score = 0;
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+      if (q1 === 'Equilíbrio ecológico') score++;
+      if (q2 === 'Monera, Protista, Fungi, Plantae, Animalia') score++;
+      if (q3 === 'Plantae') score++;
+      document.getElementById('quiz-result').textContent = `Pontuação: ${score} / 3`;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 11 - Flashcards</title>
+  <meta name="description" content="Flashcards do Capítulo 11: Evolução. Revise conceitos de seleção, deriva genética, adaptação e fósseis.">
+  <link rel="canonical" href="./cap11_flashcards.html">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --accent-color: #4f46e5;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --border-color: #e5e7eb;
+      --text-color: #111;
+      --radius: 8px;
+    }
+    body { font-family: Arial, sans-serif; padding: 20px; background:var(--bg-color); }
+    .card { width: 140px; height: 180px; border:1px solid var(--border-color); border-radius:var(--radius); display:inline-flex; align-items:center; justify-content:center; margin:8px; background:var(--card-bg); cursor:pointer; font-weight: 600; }
+    .card:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    button.flashcard-btn { background: none; border: none; padding: 0; cursor: pointer; }
+    button.flashcard-btn:focus-visible .card { box-shadow: 0 0 0 2px var(--primary-color); }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    #skip-link { position: absolute; top: -40px; left: 0; background: var(--primary-color); color: white; padding: 8px; z-index: 100; text-decoration: none; }
+    #skip-link:focus { top: 0; }
+    .container { max-width: 800px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" id="skip-link">Pular para conteúdo principal</a>
+  <main id="main-content">
+    <nav aria-label="Navegação do capítulo">
+      <a href="cap11_biologia.html">← Voltar para conteúdo</a>
+    </nav>
+    <div class="container">
+      <h1>Capítulo 11 - Flashcards</h1>
+      <p>Conceitos-chave de evolução.</p>
+      <div class="cards">
+        <button class="flashcard-btn" aria-label="Seleção"><div class="card">Seleção</div></button>
+        <button class="flashcard-btn" aria-label="Deriva"><div class="card">Deriva</div></button>
+        <button class="flashcard-btn" aria-label="Evidência"><div class="card">Evidência</div></button>
+        <button class="flashcard-btn" aria-label="Adaptação"><div class="card">Adaptação</div></button>
+        <button class="flashcard-btn" aria-label="Fósseis"><div class="card">Fósseis</div></button>
+        <button class="flashcard-btn" aria-label="RNA"><div class="card">RNA</div></button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

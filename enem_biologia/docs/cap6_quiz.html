@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 6 - Quiz</title>
+  <meta name="description" content="Quiz do Capítulo 6: Codificação da Informação Genética. Teste seus conhecimentos sobre DNA, RNA e expressão gênica.">
+  <link rel="canonical" href="./cap6_quiz.html">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --border-color: #e5e7eb;
+      --text-color: #111;
+      --radius: 8px;
+    }
+    body { font-family: Arial, Helvetica, sans-serif; padding: 20px; background: var(--bg-color); }
+    .container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 20px; border-radius: var(--radius); }
+    h1 { margin: 0 0 12px; }
+    .question { margin: 12px 0; }
+    .btn { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #eee; cursor: pointer; color: var(--text-color); }
+    .btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    .result { margin-top: 12px; font-weight: bold; }
+    fieldset { border: none; padding: 0; margin: 0; }
+    legend { font-weight: bold; margin-bottom: 8px; }
+    label { display: block; margin: 4px 0; cursor: pointer; }
+    input:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    #skip-link { position: absolute; top: -40px; left: 0; background: var(--primary-color); color: white; padding: 8px; z-index: 100; text-decoration: none; }
+    #skip-link:focus { top: 0; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" id="skip-link">Pular para conteúdo principal</a>
+  <main id="main-content">
+    <nav aria-label="Navegação do capítulo">
+      <a href="cap6_biologia.html">← Voltar para conteúdo</a>
+    </nav>
+    <div class="container">
+      <h1>Capítulo 6 - Quiz</h1>
+      <form id="quiz-form">
+        <fieldset>
+          <legend>1) Qual é a molécula que armazena a informação genética?</legend>
+          <label><input type="radio" name="q1" value="DNA"> DNA</label>
+          <label><input type="radio" name="q1" value="RNA"> RNA</label>
+          <label><input type="radio" name="q1" value="Proteína"> Proteína</label>
+        </fieldset>
+        <fieldset>
+          <legend>2) Qual processo copia o DNA em RNA?</legend>
+          <label><input type="radio" name="q2" value="Transcrição"> Transcrição</label>
+          <label><input type="radio" name="q2" value="Tradução"> Tradução</label>
+          <label><input type="radio" name="q2" value="Replicação"> Replicação</label>
+        </fieldset>
+        <fieldset>
+          <legend>3) Qual é a função do RNA mensageiro (mRNA)?</legend>
+          <label><input type="radio" name="q3" value="Transportar DNA"> Transportar DNA</label>
+          <label><input type="radio" name="q3" value="Transportar código genético"> Transportar o código genético do núcleo para os ribossomos</label>
+          <label><input type="radio" name="q3" value="Produzir energia"> Produzir energia</label>
+        </fieldset>
+        <button type="button" class="btn" id="submit-quiz" aria-label="Verificar respostas do quiz">Verificar</button>
+      </form>
+      <div class="result" id="quiz-result" aria-live="polite" aria-atomic="true"></div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('submit-quiz').addEventListener('click', () => {
+      let score = 0;
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+      if (q1 === 'DNA') score++;
+      if (q2 === 'Transcrição') score++;
+      if (q3 === 'Transportar código genético') score++;
+      document.getElementById('quiz-result').textContent = `Pontuação: ${score} / 3`;
+    });
+  </script>
+</body>
+</html>

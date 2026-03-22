@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capítulo 13 - Jogo da Memória</title>
+  <meta name="description" content="Jogo da Memória do Capítulo 13: Qualidade de Vida. Combine os pares de conceitos.">
+  <link rel="canonical" href="./cap13_memory.html">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --accent-color: #4f46e5;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --border-color: #e5e7eb;
+      --text-color: #111;
+      --radius: 8px;
+    }
+    body { font-family: Arial, sans-serif; padding: 20px; background:var(--bg-color); }
+    .wrap { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 20px; border-radius: var(--radius); }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .card { width: 100%; height: 100px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-weight: bold; }
+    .card:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    button.memory-btn { background: none; border: none; padding: 0; cursor: pointer; }
+    button.memory-btn:focus-visible .card { box-shadow: 0 0 0 2px var(--primary-color); }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+    #skip-link { position: absolute; top: -40px; left: 0; background: var(--primary-color); color: white; padding: 8px; z-index: 100; text-decoration: none; }
+    #skip-link:focus { top: 0; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" id="skip-link">Pular para conteúdo principal</a>
+  <main id="main-content">
+    <nav aria-label="Navegação do capítulo">
+      <a href="cap13_biologia.html">← Voltar para conteúdo</a>
+    </nav>
+    <div class="wrap">
+      <h1>Capítulo 13 - Jogo da Memória</h1>
+      <p>Encontre os pares correspondentes. Clique nas cartas para virá-las.</p>
+      <div class="grid" id="grid-memory" role="grid" aria-label="Jogo da memória">
+        <button class="memory-btn" aria-label="Carta A"><div class="card">A</div></button>
+        <button class="memory-btn" aria-label="Carta A"><div class="card">A</div></button>
+        <button class="memory-btn" aria-label="Carta B"><div class="card">B</div></button>
+        <button class="memory-btn" aria-label="Carta B"><div class="card">B</div></button>
+        <button class="memory-btn" aria-label="Carta C"><div class="card">C</div></button>
+        <button class="memory-btn" aria-label="Carta C"><div class="card">C</div></button>
+        <button class="memory-btn" aria-label="Carta D"><div class="card">D</div></button>
+        <button class="memory-btn" aria-label="Carta D"><div class="card">D</div></button>
+      </div>
+    </div>
+  </main>
+  <script>
+    document.getElementById('grid-memory').addEventListener('click', (e)=>{
+      if(e.target.closest('.memory-btn')) {
+        const card = e.target.closest('.memory-btn').querySelector('.card');
+        card.classList.toggle('flipped');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+name: Release Capítulos 1-13
+on:
+  workflow_dispatch:
+
+jobs:
+  consolidate-and-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+      - name: Ensure main is up to date
+        run: |
+          git fetch origin
+          git switch main
+          git pull origin main
+      - name: Create squash branch
+        run: |
+          git switch -c release/cap1-13-squash
+      - name: Squash into a single commit
+        run: |
+          git reset --soft origin/main
+          git commit -m "release: Capítulos 1–13 consolidados em um único patch"
+      - name: Push patch branch
+        run: |
+          git push -u origin release/cap1-13-squash
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          head: release/cap1-13-squash
+          title: "Release Capítulos 1-13 - Patch Consolidado"
+          body: |
+            Consolida Capítulos 1 a 13 em um único patch para release.
+            Inclui cap1–cap13 com as quatro páginas por capítulo (biologia, quiz, flashcards e memory).
