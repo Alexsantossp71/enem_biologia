@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="O Arquivo Éris — Estude Biologia para o ENEM com uma novela de ficção científica. Teoria, flashcards, jogo da memória e quiz para cada capítulo.">
+  <title>O Arquivo Éris — Biologia ENEM</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-particles"></div>
+  <div class="bg-grid"></div>
+
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-brand">
+      <div class="logo-icon">🧬</div>
+      <span class="brand-text">ARQUIVO ÉRIS</span>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="#hero">Início</a></li>
+      <li><a href="#capitulos">Capítulos</a></li>
+      <li><a href="#about">Sobre</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      sistema ativo — ano 2047
+    </div>
+    <h1>O ARQUIVO<br>ÉRIS</h1>
+    <p class="subtitle">Biologia para o ENEM — disfarçada de ficção científica</p>
+    <p class="subtitle-accent">[ <span>8 capítulos</span> · <span>teoria</span> · <span>flashcards</span> · <span>jogo da memória</span> · <span>quiz</span> ]</p>
+    <a href="#capitulos" class="btn-cta">🧬 Iniciar Missão</a>
+  </section>
+
+  <!-- ── CHAPTERS ── -->
+  <section class="section" id="capitulos">
+    <div class="section-header">
+      <span class="section-tag">📡 Camadas Desbloqueadas</span>
+      <h2>CAPÍTULOS</h2>
+      <p>Cada capítulo é uma camada do Projeto Éris. Domine a teoria e complete os desafios.</p>
+    </div>
+    <div class="chapters-grid" id="chaptersGrid"></div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section class="section" id="about">
+    <div class="section-header">
+      <span class="section-tag">📋 Briefing da Missão</span>
+      <h2>COMO FUNCIONA</h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; max-width:900px; margin:0 auto;">
+      <div class="chapter-card" style="cursor:default;">
+        <div style="font-size:2rem;margin-bottom:1rem;">📖</div>
+        <h3>Teoria</h3>
+        <p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">Leia a história de Éris e aprenda Biologia sem perceber. Conteúdo alinhado ao ENEM.</p>
+      </div>
+      <div class="chapter-card" style="cursor:default;">
+        <div style="font-size:2rem;margin-bottom:1rem;">🃏</div>
+        <h3>Flashcards</h3>
+        <p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">Revise os conceitos-chave com cards interativos que viram ao clique.</p>
+      </div>
+      <div class="chapter-card" style="cursor:default;">
+        <div style="font-size:2rem;margin-bottom:1rem;">🧠</div>
+        <h3>Jogo da Memória</h3>
+        <p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">Associe termos a definições neste jogo de memória com efeitos visuais.</p>
+      </div>
+      <div class="chapter-card" style="cursor:default;">
+        <div style="font-size:2rem;margin-bottom:1rem;">✅</div>
+        <h3>Quiz</h3>
+        <p style="color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">Teste seus conhecimentos com perguntas do nível ENEM e receba feedback.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <p>🧬 <strong>O Arquivo Éris</strong> — Biologia para o ENEM disfarçada de ficção científica</p>
+    <p style="margin-top:0.5rem">Protagonista: Éris, 17 anos · Ano: 2047 · 8 capítulos completos</p>
+    <p style="margin-top:0.5rem; color:var(--cyan);">Criado com 💚 para estudantes brasileiros</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+    const grid = document.getElementById('chaptersGrid');
+    CHAPTERS.forEach((ch, i) => {
+      const card = document.createElement('a');
+      card.href = `capitulo_${ch.id}/teoria.html`;
+      card.className = 'chapter-card animate-in';
+      card.dataset.chapter = ch.id;
+      card.innerHTML = `
+        <div class="card-number">${String(ch.id).padStart(2,'0')}</div>
+        <h3>${ch.title}</h3>
+        <div class="card-topic">${ch.icon} ${ch.topic}</div>
+        <div class="card-activities">
+          <span class="activity-badge">📖 Teoria</span>
+          <span class="activity-badge">🃏 Flashcards</span>
+          <span class="activity-badge">🧠 Memória</span>
+          <span class="activity-badge">✅ Quiz</span>
+        </div>`;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

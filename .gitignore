@@ -1,17 +1,19 @@
-# OS files
+# System files
 .DS_Store
 Thumbs.db
+desktop.ini
 nul
 
-# Editor files
-*.swp
-*.swo
-*~
+# IDE
 .vscode/
 .idea/
+*.code-workspace
 
 # Logs
 *.log
+
+# Node
+node_modules/
 
 # Temporary files
 tmp/
