@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="#FFF8E1"/>
+  
+  <!-- Microscópio antigo -->
+  <g transform="translate(50, 100)">
+    <rect x="0" y="0" width="20" height="200" fill="#5D4037" rx="3"/>
+    <rect x="-30" y="180" width="80" height="20" fill="#5D4037" rx="3"/>
+    <circle cx="10" cy="50" r="40" fill="#8D6E63" stroke="#5D4037" stroke-width="3"/>
+    <circle cx="10" cy="50" r="30" fill="#D7CCC8" opacity="0.6"/>
+    <line x1="10" y1="50" x2="150" y2="50" stroke="#5D4037" stroke-width="4"/>
+    <rect x="150" y="40" width="60" height="20" fill="#5D4037" rx="3"/>
+  </g>
+  
+  <!-- Visão ampliada da cortiça -->
+  <g transform="translate(300, 50)">
+    <rect width="250" height="300" fill="#FFFFFF" stroke="#5D4037" stroke-width="2" rx="5"/>
+    <text x="125" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="#5D4037">Visão Ampliada</text>
+    
+    <!-- Células da cortiça -->
+    <g transform="translate(25, 50)">
+      <rect x="0" y="0" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="40" y="0" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="80" y="0" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="120" y="0" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      
+      <rect x="0" y="40" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="40" y="40" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="80" y="40" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="120" y="40" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      
+      <rect x="0" y="80" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="40" y="80" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="80" y="80" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="120" y="80" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      
+      <rect x="0" y="120" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="40" y="120" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="80" y="120" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+      <rect x="120" y="120" width="40" height="40" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+    </g>
+    
+    <text x="125" y="280" text-anchor="middle" font-family="Arial" font-size="12" fill="#5D4037">\"Células\" da cortiça</text>
+  </g>
+  
+  <text x="300" y="380" text-anchor="middle" font-family="Arial" font-size="14" fill="#5D4037" font-style="italic">Robert Hooke observando cortiça (1665)</text>
+</svg>
