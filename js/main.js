@@ -1,20 +1,5 @@
 // Script principal para navegação e interatividade básica
 
-document.addEventListener('DOMContentLoaded', function() {
-  console.log("Site carregado com sucesso!");
-  
-  // Adicionar efeito suave nos cards
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.style.transform = 'translateY(-5px)';
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'translateY(0)';
-    });
-  });
-});
-
 // ------------------------------------------------------------
 // Correção de quiz dos capítulos (usada pelos botões "Verificar
 // Respostas" nas páginas capN_biologia.html)
@@ -54,3 +39,44 @@ window.checkQuiz = function (answerKey, resultId = 'quiz-result') {
   result.style.display = 'block';
   result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
+
+// Toggle de tema claro/escuro (persistido em localStorage)
+(function () {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('theme');
+  if (stored === 'dark' || stored === 'light') {
+    root.setAttribute('data-theme', stored);
+  }
+
+  function sync() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    btn.textContent = isDark ? '☀️ Claro' : '🌙 Escuro';
+    btn.setAttribute('aria-pressed', String(isDark));
+  }
+
+  function buildToggle() {
+    const nav = document.querySelector('nav');
+    if (!nav || document.getElementById('theme-toggle')) return;
+    const btn = document.createElement('button');
+    btn.id = 'theme-toggle';
+    btn.className = 'theme-toggle';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Alternar tema claro/escuro');
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      sync();
+    });
+    nav.appendChild(btn);
+    sync();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildToggle);
+  } else {
+    buildToggle();
+  }
+})();
