@@ -1,12 +1,11 @@
 /* Arquivo Vivo: narrativa editorial científica, evidências visuais e exploração acessível. */
-import { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
-import { ArrowDown, ArrowUpRight, Check, ChevronRight, CircleHelp, Eye, FlaskConical, Globe2, Lightbulb, MousePointer2, RotateCcw, Sparkles, ZoomIn } from "lucide-react";
+import { useState } from "react";
+import { ArrowDown, ArrowUpRight, Check, CircleHelp, Eye, FlaskConical, Globe2, Lightbulb, MousePointer2, Sparkles, ZoomIn } from "lucide-react";
 
-const heroImage = "/manus-storage/cap1-hero-archive_19440cc5.jpg";
-const hookeImage = "/manus-storage/cap1-hooke-cork_79fdabb7.jpg";
-const leeuwenhoekImage = "/manus-storage/cap1-leeuwenhoek_651a66c7.jpg";
-const comparisonImage = "/manus-storage/cap1-cell-comparison_5b00bc0d.jpg";
+const heroImage = "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1800&q=85";
+const hookeImage = "/manus-storage/cap1-hooke-cork_2d0998aa.svg";
+const leeuwenhoekImage = "/manus-storage/cap1-leeuwenhoek_a1899305.svg";
+const comparisonImage = "/manus-storage/cap1-cell-comparison_3987daf5.svg";
 const markImage = "/manus-storage/trilhas-mark_6f6dc234.png";
 
 const milestones = [
@@ -53,92 +52,28 @@ const quizQuestions = [
 ];
 
 function CellModel() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState("Núcleo");
-  const selectedRef = useRef(selected);
-  selectedRef.current = selected;
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#102f35");
-    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-    camera.position.set(0, 0.2, 7.4);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    container.appendChild(renderer.domElement);
-
-    const group = new THREE.Group();
-    scene.add(group);
-    const membrane = new THREE.Mesh(
-      new THREE.SphereGeometry(2.55, 48, 48),
-      new THREE.MeshPhysicalMaterial({ color: 0x9dd6b1, transparent: true, opacity: 0.28, roughness: 0.32, transmission: 0.18, side: THREE.DoubleSide })
-    );
-    group.add(membrane);
-    const cytoplasm = new THREE.Mesh(
-      new THREE.SphereGeometry(2.26, 42, 42),
-      new THREE.MeshPhysicalMaterial({ color: 0xb9e1ca, transparent: true, opacity: 0.43, roughness: 0.8 })
-    );
-    group.add(cytoplasm);
-
-    const parts: Record<string, THREE.Object3D> = {};
-    const nucleus = new THREE.Mesh(new THREE.SphereGeometry(0.86, 32, 32), new THREE.MeshStandardMaterial({ color: 0x5c7f9d, roughness: 0.45 }));
-    nucleus.position.set(-0.18, 0.2, 0.5); parts["Núcleo"] = nucleus; group.add(nucleus);
-    const nucleolus = new THREE.Mesh(new THREE.SphereGeometry(0.24, 20, 20), new THREE.MeshStandardMaterial({ color: 0xd9822b }));
-    nucleolus.position.set(-0.45, 0.36, 1.1); group.add(nucleolus);
-
-    const mitoPositions = [[-1.3, 0.8, 0.4], [1.18, -0.72, 0.7], [0.94, 1.15, -0.48], [-0.9, -1.25, -0.5]];
-    mitoPositions.forEach((position, index) => {
-      const mito = new THREE.Mesh(new THREE.CapsuleGeometry(0.18, 0.58, 6, 12), new THREE.MeshStandardMaterial({ color: 0xd9822b, roughness: 0.55 }));
-      mito.position.set(position[0], position[1], position[2]);
-      mito.rotation.z = index * 0.7; mito.rotation.x = index * 0.35;
-      if (index === 0) parts["Mitocôndrias"] = mito;
-      group.add(mito);
-    });
-    const er = new THREE.Mesh(new THREE.TorusGeometry(1.35, 0.11, 14, 42), new THREE.MeshStandardMaterial({ color: 0xc7a6d4, roughness: 0.42 }));
-    er.rotation.x = Math.PI / 2.6; er.position.set(0.42, -0.2, 0.22); parts["Retículo endoplasmático"] = er; group.add(er);
-    const golgi = new THREE.Group();
-    for (let i = 0; i < 5; i += 1) {
-      const plate = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.045, 10, 24), new THREE.MeshStandardMaterial({ color: 0xe7ba74 }));
-      plate.scale.set(1.5, 0.55, 0.65); plate.position.set(1.15, 0.2 + i * 0.13, -0.8); golgi.add(plate);
-    }
-    parts["Complexo golgiense"] = golgi; group.add(golgi);
-
-    scene.add(new THREE.AmbientLight(0xffffff, 1.6));
-    const key = new THREE.DirectionalLight(0xffe8bd, 2.5); key.position.set(4, 5, 6); scene.add(key);
-    const rim = new THREE.PointLight(0x6ebca8, 16, 12); rim.position.set(-4, -1, 3); scene.add(rim);
-
-    let dragging = false;
-    let lastX = 0;
-    let lastY = 0;
-    let frame = 0;
-    const onPointerDown = (event: PointerEvent) => { dragging = true; lastX = event.clientX; lastY = event.clientY; container.setPointerCapture(event.pointerId); };
-    const onPointerMove = (event: PointerEvent) => { if (!dragging) return; group.rotation.y += (event.clientX - lastX) * 0.008; group.rotation.x += (event.clientY - lastY) * 0.008; lastX = event.clientX; lastY = event.clientY; };
-    const onPointerUp = () => { dragging = false; };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft") group.rotation.y -= 0.12;
-      if (event.key === "ArrowRight") group.rotation.y += 0.12;
-      if (event.key === "ArrowUp") group.rotation.x -= 0.12;
-      if (event.key === "ArrowDown") group.rotation.x += 0.12;
-    };
-    const resize = () => { if (!container) return; const { clientWidth, clientHeight } = container; renderer.setSize(clientWidth, clientHeight); camera.aspect = clientWidth / clientHeight; camera.updateProjectionMatrix(); };
-    container.addEventListener("pointerdown", onPointerDown); container.addEventListener("pointermove", onPointerMove); container.addEventListener("pointerup", onPointerUp); container.addEventListener("pointercancel", onPointerUp); container.addEventListener("keydown", onKeyDown); window.addEventListener("resize", resize); resize();
-    const animate = () => { frame = requestAnimationFrame(animate); if (!dragging) group.rotation.y += 0.0025; Object.entries(parts).forEach(([name, object]) => { const active = name === selectedRef.current; object.scale.lerp(new THREE.Vector3(active ? 1.12 : 1, active ? 1.12 : 1, active ? 1.12 : 1), 0.08); }); renderer.render(scene, camera); };
-    animate();
-    return () => { cancelAnimationFrame(frame); window.removeEventListener("resize", resize); container.removeEventListener("pointerdown", onPointerDown); container.removeEventListener("pointermove", onPointerMove); container.removeEventListener("pointerup", onPointerUp); container.removeEventListener("pointercancel", onPointerUp); container.removeEventListener("keydown", onKeyDown); renderer.dispose(); container.removeChild(renderer.domElement); };
-  }, []);
-
-  const labels = [
-    ["Núcleo", "Guarda o DNA e coordena as atividades celulares."],
-    ["Mitocôndrias", "Produzem ATP na respiração celular."],
-    ["Retículo endoplasmático", "Participa da produção e do transporte de moléculas."],
-    ["Complexo golgiense", "Modifica, empacota e distribui substâncias."],
-  ] as const;
-  return <div className="model-shell"><div ref={containerRef} className="cell-canvas" tabIndex={0} aria-label="Modelo tridimensional de uma célula eucarionte. Use as setas ou arraste para explorar." /><div className="model-hint"><MousePointer2 size={15} /> arraste para girar <span>•</span> <ZoomIn size={15} /> role para aproximar</div><div className="organelle-list">{labels.map(([name, description]) => <button key={name} className={selected === name ? "organelle active" : "organelle"} onClick={() => setSelected(name)}><span className="organelle-dot" /> <span><strong>{name}</strong><small>{selected === name ? description : "Explore no modelo"}</small></span><ChevronRight size={16} /></button>)}</div></div>;
+  return <div className="model-shell">
+    <div className="community-model-card">
+      <iframe
+        title="Modelo 3D comunitário de uma célula animal"
+        src="https://sketchfab.com/models/abaa9a651c834cdaa67072b32fb0024f/embed?autostart=0&ui_theme=dark&dnt=1"
+        allow="autoplay; fullscreen; xr-spatial-tracking"
+        allowFullScreen
+        referrerPolicy="strict-origin-when-cross-origin"
+      />
+      <div className="community-model-fallback">
+        <Globe2 size={16} />
+        Se o modelo não carregar, <a href="https://sketchfab.com/3d-models/animal-cell-abaa9a651c834cdaa67072b32fb0024f" target="_blank" rel="noreferrer">abra-o no Sketchfab</a>.
+      </div>
+    </div>
+    <div className="organelle-list community-model-info">
+      <div className="model-source"><span>MODELO COMUNITÁRIO</span><strong>Animal Cell</strong><small>Forged1212 · Sketchfab</small></div>
+      <div className="model-source"><span>COMO EXPLORAR</span><strong>Arraste para girar</strong><small>Use zoom para observar núcleo, mitocôndrias e retículo.</small></div>
+      <div className="model-source"><span>LICENÇA</span><strong>CC BY 4.0</strong><small>Uso com atribuição ao autor. O embed mantém a fonte original.</small></div>
+      <a className="model-link" href="https://sketchfab.com/3d-models/animal-cell-abaa9a651c834cdaa67072b32fb0024f" target="_blank" rel="noreferrer">Ver fonte e créditos <ArrowUpRight size={15} /></a>
+    </div>
+    <div className="model-hint"><MousePointer2 size={15} /> arraste para girar <span>•</span> <ZoomIn size={15} /> use zoom <span>•</span> acessível por leitor de tela via título</div>
+  </div>;
 }
 
 function AppMark() { return <img className="brand-mark" src={markImage} alt="" aria-hidden="true" />; }
