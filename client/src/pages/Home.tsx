@@ -3,9 +3,9 @@ import { useState } from "react";
 import { ArrowDown, ArrowUpRight, Check, CircleHelp, Eye, FlaskConical, Globe2, Lightbulb, MousePointer2, Sparkles, ZoomIn } from "lucide-react";
 
 const heroImage = "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1800&q=85";
-const hookeImage = "/manus-storage/cap1-hooke-cork_2d0998aa.svg";
-const leeuwenhoekImage = "/manus-storage/cap1-leeuwenhoek_a1899305.svg";
-const comparisonImage = "/manus-storage/cap1-cell-comparison_3987daf5.svg";
+const hookeImage = "/manus-storage/cap1-hooke-editorial_fae088bf.png";
+const leeuwenhoekImage = "/manus-storage/cap1-leeuwenhoek-editorial_1b86e0e5.png";
+const comparisonImage = "/manus-storage/cap1-cell-comparison-editorial_fda5514c.png";
 const markImage = "/manus-storage/trilhas-mark_6f6dc234.png";
 
 const milestones = [
