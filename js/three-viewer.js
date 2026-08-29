@@ -13,7 +13,7 @@
 // Em cenas com etapas (ex.: mitosis), os botões na página usam:
 //   <button data-viewer-stage="prophase">Prófase</button>
 // ============================================================
-import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+import * as THREE from 'https://unpkg.com/three@0.185.1/build/three.module.js';
 
 const container = document.getElementById('canvas-container');
 if (container) {
@@ -23,6 +23,15 @@ if (container) {
     container.innerHTML = '<div class="canvas-label">⚠️ WebGL indisponível — veja o modelo externo abaixo.</div>';
     console.warn('three-viewer:', err);
   }
+}
+
+// ----- Service Worker (cache offline) -----
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch((err) => {
+      console.warn('serviceWorker:', err);
+    });
+  });
 }
 
 function initViewer(containerEl) {
@@ -93,11 +102,13 @@ function initViewer(containerEl) {
 
   // ----- Loop de animação -----
   const clock = new THREE.Clock();
+  const reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
-    if (!dragging) group.rotation.y += 0.0035;
-    if (built.tick) built.tick(t);
+    if (!dragging && !reduceMotion) group.rotation.y += 0.0035;
+    if (built.tick && !reduceMotion) built.tick(t);
     renderer.render(scene, camera);
   }
   animate();
@@ -416,5 +427,24 @@ const SCENES = {
       group.add(arrow);
     }
     return { tick(t) { group.rotation.y += Math.sin(t * 0.4) * 0.0004; } };
+  },
+
+  // ---- Célula eucariótica genérica (Cap. 1) ----
+  eukaryote(group) {
+    const membrane = mat(0x81C784, { transparent: true, opacity: 0.3, side: THREE.DoubleSide });
+    add(group, new THREE.SphereGeometry(3, 32, 32), membrane);
+    const cytoplasm = mat(0xC8E6C9, { transparent: true, opacity: 0.6 });
+    add(group, new THREE.SphereGeometry(2.8, 32, 32), cytoplasm);
+    const nucleus = mat(0x5C6BC0);
+    sphere(group, 1, nucleus, [0.5, 0.3, 0.5]);
+    const mitoMat = mat(0xFF7043);
+    [[-1.5, 0.5, 1], [1.2, -0.8, 0.5], [-0.8, -1, -0.5], [0.5, 1.2, -0.8]].forEach((p) => {
+      const m = add(group, new THREE.CapsuleGeometry(0.3, 0.8, 4, 8), mitoMat, p);
+      m.rotation.z = Math.random() * Math.PI;
+      m.rotation.x = Math.random() * Math.PI;
+    });
+    const er = mat(0xAB47BC);
+    add(group, new THREE.TorusGeometry(1.5, 0.2, 16, 32), er, [-0.3, 0.2, 0.8], [Math.PI / 3, 0, 0]);
+    return {};
   }
 };

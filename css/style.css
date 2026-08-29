@@ -652,3 +652,104 @@ footer {
 .lead--spaced {
   margin-top: 1rem;
 }
+
+/* =========================================================
+   DARK MODE — segue a preferência do sistema e permite
+   alternância manual via [data-theme="dark"] no <html>.
+   ========================================================= */
+:root[data-theme="dark"] {
+  --primary-color: #66BB6A;
+  --secondary-color: #4CAF50;
+  --accent-color: #FFB74D;
+  --background-light: #121A12;
+  --text-dark: #E8F5E9;
+  --text-light: #E8F5E9;
+  --card-bg: #1E2A1E;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="dark"] .story-section,
+:root[data-theme="dark"] .quote,
+:root[data-theme="dark"] .quiz-card,
+:root[data-theme="dark"] .tip-card,
+:root[data-theme="dark"] .external-3d-card,
+:root[data-theme="dark"] .image-placeholder-card {
+  background: #1B2A1B;
+}
+
+:root[data-theme="dark"] .card-description,
+:root[data-theme="dark"] .lead,
+:root[data-theme="dark"] .caption,
+:root[data-theme="dark"] .instruction {
+  color: #B7C9B8;
+}
+
+:root[data-theme="dark"] .comparison-table tbody tr:nth-child(even) {
+  background: #223022;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary-color: #66BB6A;
+    --secondary-color: #4CAF50;
+    --accent-color: #FFB74D;
+    --background-light: #121A12;
+    --text-dark: #E8F5E9;
+    --text-light: #E8F5E9;
+    --card-bg: #1E2A1E;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  :root:not([data-theme="light"]) .story-section,
+  :root:not([data-theme="light"]) .quote,
+  :root:not([data-theme="light"]) .quiz-card,
+  :root:not([data-theme="light"]) .tip-card,
+  :root:not([data-theme="light"]) .external-3d-card,
+  :root:not([data-theme="light"]) .image-placeholder-card {
+    background: #1B2A1B;
+  }
+
+  :root:not([data-theme="light"]) .card-description,
+  :root:not([data-theme="light"]) .lead,
+  :root:not([data-theme="light"]) .caption,
+  :root:not([data-theme="light"]) .instruction {
+    color: #B7C9B8;
+  }
+
+  :root:not([data-theme="light"]) .comparison-table tbody tr:nth-child(even) {
+    background: #223022;
+  }
+}
+
+/* Botão de alternância de tema (presente na navegação) */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--text-light);
+  color: var(--text-light);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* =========================================================
+   ACESSIBILIDADE — respeita quem prefere menos movimento.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
