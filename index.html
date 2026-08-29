@@ -9,6 +9,9 @@
   <meta property="og:description" content="Plataforma gratuita de biologia para o ENEM com narrativas históricas, modelos 3D e quizzes.">
   <meta property="og:type" content="website">
   <title>Trilhas de Biologia ENEM | Estude com Histórias e Interatividade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -28,207 +31,197 @@
     </ul>
   </nav>
 
-  <div class="container">
-
-    <!-- Abertura narrativa, no mesmo formato das story-section -->
-    <section class="page-content hero">
-      <h2>📚 Domine a Biologia do ENEM com Histórias que Inspiram</h2>
-      <p class="lead">
-        Esqueça a decoreba! Aqui você viaja no tempo com os grandes cientistas,
-        explora células, DNA, fungos e ecossistemas em <strong>modelos 3D interativos</strong>
-        e entende os conceitos através de narrativas envolventes — com quiz de correção
-        automática em cada capítulo.
+  <!-- Hero bioluminescente: gradient-mesh + título editorial + DNA 3D -->
+  <section class="hero" id="modelo-3d">
+    <div class="hero__inner reveal">
+      <p class="eyebrow">Trilhas de Biologia · ENEM</p>
+      <h2 class="hero__title">Domine a Biologia do ENEM com histórias que inspiram</h2>
+      <p class="hero__subtitle">
+        Esqueça a decoreba. Viaje no tempo com os grandes cientistas, explore células,
+        DNA, fungos e ecossistemas em modelos 3D interativos e entenda cada conceito
+        através de narrativas envolventes — com quiz de correção automática em cada capítulo.
       </p>
-      <div class="hero-actions">
-        <a href="#capitulos" class="btn btn-lg">Começar Agora →</a>
-        <a href="#modelo-3d" class="btn btn-ghost btn-lg">Explorar o Modelo 3D</a>
+      <div class="hero__cta">
+        <a href="cap1_biologia.html" class="btn btn--primary">Começar a estudar</a>
+        <a href="#chapters" class="btn btn--ghost">Ver trilhas</a>
       </div>
-    </section>
+    </div>
+    <div class="hero__visual reveal">
+      <div id="canvas-container" data-three-scene="dna"></div>
+    </div>
+  </section>
 
-    <!-- Gride de capítulos -->
-    <section class="page-content chapters-section" id="capitulos">
-      <h2 class="page-heading page-heading--center">📖 Capítulos Disponíveis</h2>
-
-      <div class="chapters-grid">
-
-        <!-- Capítulo 1 -->
-        <div class="card" onclick="window.location.href='cap1_biologia.html'">
-          <img src="img/hooke_cork.svg" alt="Robert Hooke e a descoberta das células" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 1: A Descoberta da Vida Microscópica</h3>
-            <p class="card-description">Viaje para Londres em 1665 e descubra como Robert Hooke revelou o mundo das células pela primeira vez.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 2 -->
-        <div class="card" onclick="window.location.href='cap2_biologia.html'">
-          <img src="img/water_molecules.jpg" alt="Moléculas de água" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 2: Composição Química da Vida</h3>
-            <p class="card-description">Entenda as moléculas que formam todos os seres vivos: água, sais minerais, carboidratos, lipídios e proteínas.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 3 -->
-        <div class="card" onclick="window.location.href='cap3_biologia.html'">
-          <img src="img/dna_helix.jpg" alt="Dupla hélice de DNA" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 3: DNA e Genética</h3>
-            <p class="card-description">Descubra o código da vida: dupla hélice, replicação, síntese de proteínas e as leis de Mendel.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 4 -->
-        <div class="card" onclick="window.location.href='cap4_biologia.html'">
-          <img src="img/plant_cell.svg" alt="Célula vegetal com organelas" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 4: Citologia</h3>
-            <p class="card-description">Explore o interior da célula, as organelas, o transporte pela membrana e a célula vegetal em 3D.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 5 -->
-        <div class="card" onclick="window.location.href='cap5_biologia.html'">
-          <img src="img/mitochondria.jpg" alt="Mitocôndria" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 5: Metabolismo Energético</h3>
-            <p class="card-description">Aprenda como as células produzem energia através da respiração celular, fermentação e fotossíntese.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 6 -->
-        <div class="card" onclick="window.location.href='cap6_biologia.html'">
-          <img src="img/mitosis.jpg" alt="Fases da mitose" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 6: Divisão Celular</h3>
-            <p class="card-description">Entenda a mitose e a meiose com um modelo 3D interativo das fases da divisão celular.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 7 -->
-        <div class="card" onclick="window.location.href='cap7_biologia.html'">
-          <img src="img/tissues.jpg" alt="Tecidos humanos" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 7: Histologia Animal</h3>
-            <p class="card-description">Conheça os tecidos epitelial, conjuntivo, muscular e nervoso — e um neurônio 3D gigante.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 8 -->
-        <div class="card" onclick="window.location.href='cap8_biologia.html'">
-          <img src="img/flower_anatomy.svg" alt="Anatomia da flor" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 8: Botânica</h3>
-            <p class="card-description">Explore o reino vegetal, dos musgos às angiospermas — com a anatomia da flor em 3D.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 9 -->
-        <div class="card" onclick="window.location.href='cap9_biologia.html'">
-          <img src="img/bacteria.svg" alt="Célula bacteriana" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 9: Reino Monera</h3>
-            <p class="card-description">Descubra o mundo das bactérias e cianobactérias, suas estruturas e importância ecológica.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 10 -->
-        <div class="card" onclick="window.location.href='cap10_biologia.html'">
-          <img src="img/protozoa.svg" alt="Ameba e paramécio" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 10: Reino Protista</h3>
-            <p class="card-description">Conheça protozoários e algas: ameba, paramécio, malária e doença de Chagas.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 11 -->
-        <div class="card" onclick="window.location.href='cap11_biologia.html'">
-          <img src="img/fungi.svg" alt="Cogumelo e micélio" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 11: Reino Fungi</h3>
-            <p class="card-description">Explore o reino dos fungos: cogumelos, leveduras, micoses e sua função de decompositores.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 12 -->
-        <div class="card" onclick="window.location.href='cap12_biologia.html'">
-          <img src="img/animal_phyla.svg" alt="Representantes dos filos animais" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 12: Reino Animalia</h3>
-            <p class="card-description">Uma jornada pelos filos do reino animal, dos poríferos aos mamíferos — com água-viva 3D.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-        <!-- Capítulo 13 -->
-        <div class="card" onclick="window.location.href='cap13_biologia.html'">
-          <img src="img/food_web.svg" alt="Teia alimentar" class="card-image">
-          <div class="card-content">
-            <h3 class="card-title">Capítulo 13: Ecologia</h3>
-            <p class="card-description">Entenda cadeias alimentares, ciclos biogeoquímicos, relações ecológicas e os biomas do Brasil.</p>
-            <span class="btn">Estudar Agora →</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Modelo 3D interativo, no mesmo formato dos capítulos -->
-    <section class="page-content" id="modelo-3d">
-      <h2 class="section-title">🔬 Modelo 3D Interativo: Dupla Hélice de DNA</h2>
-      <p class="lead lead--left">Arraste o mouse sobre o modelo abaixo para rotacionar e observar as estruturas em 360° — assim como dentro dos capítulos:</p>
-
-      <div id="canvas-container" data-three-scene="dna">
-        <div class="canvas-label">🖱️ Arraste para rotacionar • Scroll para zoom</div>
-      </div>
-
-      <div class="legend-grid">
-        <div class="legend-item" style="background: #E0F7FA;">
-          <strong style="color: #26C6DA;">🔵 Esqueleto açúcar-fosfato</strong>
-          <p>As duas fitas antiparalelas que formam a hélice.</p>
-        </div>
-        <div class="legend-item" style="background: #FFF3E0;">
-          <strong style="color: #FF7043;">🟠 Adenina (A)</strong>
-          <p>Pareia sempre com a timina (T).</p>
-        </div>
-        <div class="legend-item" style="background: #F3E5F5;">
-          <strong style="color: #AB47BC;">🟣 Citosina (C)</strong>
-          <p>Pareia sempre com a guanina (G).</p>
-        </div>
-        <div class="legend-item" style="background: #C8E6C9;">
-          <strong style="color: #388E3C;">🌿 No Capítulo 3</strong>
-          <p>Você estuda replicação, transcrição e as leis de Mendel.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sobre o projeto -->
-    <section class="page-content" id="sobre">
-      <h2 class="page-heading">🎯 Sobre o Projeto</h2>
-      <p class="lead lead--left">
-        O <strong>Trilhas de Biologia</strong> foi criado para transformar o estudo da biologia em uma experiência
-        envolvente e memorável. Em vez de listas intermináveis de termos técnicos, apresentamos os conceitos
-        através de histórias reais de descobertas científicas, complementadas por recursos visuais interativos
-        como modelos 3D, ilustrações e quizzes com correção automática.
-      </p>
-      <p class="lead lead--left lead--spaced">
-        Nosso objetivo é ajudar estudantes do ENEM e vestibulares a compreenderem profundamente os conceitos
-        biológicos, desenvolvendo não apenas memória, mas verdadeiro entendimento científico.
-      </p>
-    </section>
-
+  <!-- Marquee de trilhas -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Citologia</span><span>Genética</span><span>Metabolismo</span><span>Botânica</span><span>Histologia</span><span>Ecologia</span><span>Fungi</span><span>Protista</span><span>Monera</span><span>Animalia</span><span>Divisão Celular</span><span>Bioquímica</span><span>Microscopia</span>
+      <span>Citologia</span><span>Genética</span><span>Metabolismo</span><span>Botânica</span><span>Histologia</span><span>Ecologia</span><span>Fungi</span><span>Protista</span><span>Monera</span><span>Animalia</span><span>Divisão Celular</span><span>Bioquímica</span><span>Microscopia</span>
+    </div>
   </div>
+
+  <!-- Trilhas / capítulos -->
+  <section class="section" id="chapters">
+    <div class="section__head reveal" id="capitulos">
+      <p class="eyebrow">13 trilhas de estudo</p>
+      <h2>Capítulos Disponíveis</h2>
+    </div>
+
+    <div class="chapter-grid reveal">
+
+      <a class="chapter-card" href="cap1_biologia.html">
+        <img class="chapter-card__thumb" src="img/plant_cell.svg" alt="Célula vegetal e a descoberta da vida microscópica" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 01</span>
+          <h3 class="chapter-card__title">A Descoberta da Vida Microscópica</h3>
+          <p class="chapter-card__desc">Viaje para Londres em 1665 e descubra como Robert Hooke revelou o mundo das células pela primeira vez.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap2_biologia.html">
+        <img class="chapter-card__thumb" src="img/water_molecules.jpg" alt="Moléculas de água" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 02</span>
+          <h3 class="chapter-card__title">Composição Química da Vida</h3>
+          <p class="chapter-card__desc">Entenda as moléculas que formam todos os seres vivos: água, sais minerais, carboidratos, lipídios e proteínas.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap3_biologia.html">
+        <img class="chapter-card__thumb" src="img/dna_helix.jpg" alt="Dupla hélice de DNA" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 03</span>
+          <h3 class="chapter-card__title">DNA e Genética</h3>
+          <p class="chapter-card__desc">Descubra o código da vida: dupla hélice, replicação, síntese de proteínas e as leis de Mendel.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap4_biologia.html">
+        <img class="chapter-card__thumb" src="img/mitochondria.jpg" alt="Mitocôndria e organelas celulares" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 04</span>
+          <h3 class="chapter-card__title">Citologia</h3>
+          <p class="chapter-card__desc">Explore o interior da célula, as organelas, o transporte pela membrana e a célula vegetal em 3D.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap5_biologia.html">
+        <img class="chapter-card__thumb" src="img/chloroplast.jpg" alt="Cloroplasto e fotossíntese" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 05</span>
+          <h3 class="chapter-card__title">Metabolismo Energético</h3>
+          <p class="chapter-card__desc">Aprenda como as células produzem energia através da respiração celular, fermentação e fotossíntese.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap6_biologia.html">
+        <img class="chapter-card__thumb" src="img/mitosis.jpg" alt="Fases da mitose" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 06</span>
+          <h3 class="chapter-card__title">Divisão Celular</h3>
+          <p class="chapter-card__desc">Entenda a mitose e a meiose com um modelo 3D interativo das fases da divisão celular.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap7_biologia.html">
+        <img class="chapter-card__thumb" src="img/tissues.jpg" alt="Tecidos humanos" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 07</span>
+          <h3 class="chapter-card__title">Histologia Animal</h3>
+          <p class="chapter-card__desc">Conheça os tecidos epitelial, conjuntivo, muscular e nervoso — e um neurônio 3D gigante.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap8_biologia.html">
+        <img class="chapter-card__thumb" src="img/flower_anatomy.svg" alt="Anatomia da flor" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 08</span>
+          <h3 class="chapter-card__title">Botânica</h3>
+          <p class="chapter-card__desc">Explore o reino vegetal, dos musgos às angiospermas — com a anatomia da flor em 3D.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap9_biologia.html">
+        <img class="chapter-card__thumb" src="img/bacteria.svg" alt="Célula bacteriana" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 09</span>
+          <h3 class="chapter-card__title">Reino Monera</h3>
+          <p class="chapter-card__desc">Descubra o mundo das bactérias e cianobactérias, suas estruturas e importância ecológica.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap10_biologia.html">
+        <img class="chapter-card__thumb" src="img/protozoa.svg" alt="Ameba e paramécio" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 10</span>
+          <h3 class="chapter-card__title">Reino Protista</h3>
+          <p class="chapter-card__desc">Conheça protozoários e algas: ameba, paramécio, malária e doença de Chagas.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap11_biologia.html">
+        <img class="chapter-card__thumb" src="img/fungi.svg" alt="Cogumelo e micélio" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 11</span>
+          <h3 class="chapter-card__title">Reino Fungi</h3>
+          <p class="chapter-card__desc">Explore o reino dos fungos: cogumelos, leveduras, micoses e sua função de decompositores.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap12_biologia.html">
+        <img class="chapter-card__thumb" src="img/animal_phyla.svg" alt="Representantes dos filos animais" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 12</span>
+          <h3 class="chapter-card__title">Reino Animalia</h3>
+          <p class="chapter-card__desc">Uma jornada pelos filos do reino animal, dos poríferos aos mamíferos — com água-viva 3D.</p>
+        </div>
+      </a>
+
+      <a class="chapter-card" href="cap13_biologia.html">
+        <img class="chapter-card__thumb" src="img/food_web.svg" alt="Teia alimentar" loading="lazy">
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">Capítulo 13</span>
+          <h3 class="chapter-card__title">Ecologia</h3>
+          <p class="chapter-card__desc">Entenda cadeias alimentares, ciclos biogeoquímicos, relações ecológicas e os biomas do Brasil.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Método de estudo / sobre o projeto -->
+  <section class="section" id="sobre">
+    <div class="section__head reveal">
+      <p class="eyebrow">Nosso método</p>
+      <h2>Aprender biologia como quem lê uma boa história</h2>
+    </div>
+    <div class="content-section reveal">
+      <p>
+        O <strong>Trilhas de Biologia</strong> foi criado para transformar o estudo da biologia em uma
+        experiência envolvente e memorável. Em vez de listas intermináveis de termos técnicos,
+        apresentamos os conceitos através de histórias reais de descobertas científicas, complementadas
+        por recursos visuais interativos: modelos 3D, ilustrações e quizzes com correção automática.
+      </p>
+      <p>
+        Nosso objetivo é ajudar estudantes do ENEM e vestibulares a compreenderem profundamente os
+        conceitos biológicos, desenvolvendo não apenas memória, mas verdadeiro entendimento científico.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="section">
+    <div class="section__head reveal">
+      <p class="eyebrow">Bora estudar?</p>
+      <h2>Comece agora pela primeira trilha</h2>
+    </div>
+    <div class="content-section reveal">
+      <p>Treze capítulos, treze histórias. Do microscópio de Hooke às teias alimentares do Cerrado — a biologia inteira do ENEM, contada para ficar na sua cabeça.</p>
+      <div class="hero__cta">
+        <a href="cap1_biologia.html" class="btn btn--primary">Começar a estudar</a>
+        <a href="#chapters" class="btn btn--ghost">Ver trilhas</a>
+      </div>
+    </div>
+  </section>
 
   <!-- Rodapé idêntico ao das páginas de capítulo -->
   <footer id="contato">
