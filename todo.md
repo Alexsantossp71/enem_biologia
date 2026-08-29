@@ -15,3 +15,10 @@
 - [x] Integrar o modelo 3D selecionado com fallback acessível e controles responsivos.
 - [x] Validar carregamento, interação, responsividade e ausência de erros no navegador.
 - [ ] Salvar a correção em um novo checkpoint e entregar a versão revisada.
+
+## Sincronização GitHub
+
+- [ ] Verificar remoto, branch e estado local antes da sincronização.
+- [ ] Executar pull seguro sem descartar alterações locais.
+- [ ] Fazer commit das alterações, se necessário, e executar push.
+- [ ] Confirmar no GitHub o commit enviado.
