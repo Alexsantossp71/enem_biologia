@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <rect width="800" height="500" fill="#ffffff"/>
+  <!-- Briófita (musgo) -->
+  <g transform="translate(100,250)">
+    <path d="M-80 80 L-80 20 L-40 60 L0 -10 L40 60 L80 20 L80 80 Z" fill="#2E7D32" opacity="0.5"/>
+    <rect x="-90" y="70" width="180" height="40" rx="10" fill="#66BB6A"/>
+    <g stroke="#388E3C" stroke-width="5" fill="none">
+      <path d="M-60 70 Q-60 20 -70 0"/><path d="M-25 70 Q-25 15 -30 -5"/><path d="M10 70 Q10 25 5 5"/><path d="M45 70 Q45 15 50 -8"/>
+    </g>
+    <circle cx="-70" cy="-4" r="9" fill="#A5D6A7"/><circle cx="-30" cy="-9" r="9" fill="#A5D6A7"/><circle cx="5" cy="1" r="9" fill="#A5D6A7"/><circle cx="50" cy="-12" r="9" fill="#A5D6A7"/>
+  </g>
+  <!-- Pteridófita (samambaia) -->
+  <g transform="translate(300,250)">
+    <rect x="-10" y="70" width="20" height="60" fill="#5D4037"/>
+    <g stroke="#2E7D32" stroke-width="6" fill="none" stroke-linecap="round">
+      <path d="M0 70 Q-70 10 -120 -40"/><path d="M0 70 Q-30 30 -45 5"/><path d="M0 70 Q40 5 110 -55"/><path d="M0 70 Q25 25 40 0"/>
+    </g>
+    <g fill="#43A047">
+      <ellipse cx="-95" cy="-22" rx="16" ry="6" transform="rotate(-25 -95 -22)"/><ellipse cx="-60" cy="0" rx="16" ry="6" transform="rotate(-30 -60 0)"/>
+      <ellipse cx="-35" cy="22" rx="14" ry="5" transform="rotate(-35 -35 22)"/><ellipse cx="85" cy="-35" rx="16" ry="6" transform="rotate(25 85 -35)"/>
+      <ellipse cx="30" cy="15" rx="14" ry="5" transform="rotate(30 30 15)"/><ellipse cx="55" cy="42" rx="12" ry="5" transform="rotate(25 55 42)"/>
+    </g>
+  </g>
+  <!-- Gimnosperma (pinheiro) -->
+  <g transform="translate(500,250)">
+    <rect x="-12" y="90" width="24" height="60" fill="#5D4037"/>
+    <path d="M0 -90 L-90 30 L90 30 Z" fill="#2E7D32"/><path d="M0 -10 L-70 70 L70 70 Z" fill="#388E3C"/>
+    <ellipse cx="0" cy="-20" rx="12" ry="30" fill="#A1887F" stroke="#795548" stroke-width="4"/>
+    <ellipse cx="-30" cy="5" rx="9" ry="22" fill="#A1887F" stroke="#795548" stroke-width="3" transform="rotate(-18 -30 5)"/>
+    <ellipse cx="30" cy="5" rx="9" ry="22" fill="#A1887F" stroke="#795548" stroke-width="3" transform="rotate(18 30 5)"/>
+  </g>
+  <!-- Angiosperma -->
+  <g transform="translate(700,250)">
+    <rect x="-6" y="40" width="12" height="120" fill="#388E3C"/>
+    <ellipse cx="28" cy="115" rx="30" ry="12" fill="#66BB6A" transform="rotate(-20 28 115)"/>
+    <ellipse cx="-28" cy="95" rx="30" ry="12" fill="#66BB6A" transform="rotate(20 -28 95)"/>
+    <g fill="#F48FB1" stroke="#EC407A" stroke-width="3">
+      <ellipse cx="0" cy="20" rx="16" ry="28"/>
+      <ellipse cx="-24" cy="26" rx="14" ry="22" transform="rotate(-45 -24 26)"/>
+      <ellipse cx="24" cy="26" rx="14" ry="22" transform="rotate(45 24 26)"/>
+    </g>
+    <circle cx="0" cy="14" r="10" fill="#FFCA28"/>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <rect width="800" height="500" fill="#ffffff"/>
+  <!-- Cogumelo -->
+  <g>
+    <path d="M380 300 q5 80 -30 140 M420 300 q-5 80 30 140" stroke="#D7CCC8" stroke-width="0" fill="none"/>
+    <path d="M330 300 Q340 260 380 240 Q400 230 420 240 Q460 260 470 300 Q420 320 330 300 Z" fill="#EF9A9A" stroke="#C62828" stroke-width="6"/>
+    <path d="M330 300 Q400 270 470 300 Q400 315 330 300Z" fill="#FFCCBC"/>
+    <g stroke="#A1887F" stroke-width="3">
+      <line x1="350" y1="292" x2="350" y2="300"/><line x1="370" y1="288" x2="370" y2="297"/><line x1="390" y1="286" x2="390" y2="295"/><line x1="410" y1="286" x2="410" y2="295"/><line x1="430" y1="288" x2="430" y2="297"/><line x1="450" y1="292" x2="450" y2="300"/>
+    </g>
+    <path d="M372 298 L368 440 L432 440 L428 298" fill="#FFF3E0" stroke="#D7CCC8" stroke-width="6"/>
+    <circle cx="375" cy="255" r="9" fill="#FFF9C4"/><circle cx="405" cy="250" r="8" fill="#FFF9C4"/><circle cx="430" cy="262" r="7" fill="#FFF9C4"/><circle cx="355" cy="270" r="7" fill="#FFF9C4"/>
+    <!-- Micélio -->
+    <g stroke="#D7CCC8" stroke-width="8" fill="none" stroke-linecap="round">
+      <path d="M380 440 Q330 460 290 445"/><path d="M380 440 Q420 470 480 450"/><path d="M380 440 Q380 480 350 490"/>
+    </g>
+  </g>
+  <!-- Bolor -->
+  <g transform="translate(150,330)">
+    <rect x="-70" y="80" width="160" height="30" rx="8" fill="#8D6E63"/>
+    <g stroke="#BCAAA4" stroke-width="5" fill="none">
+      <path d="M-40 80 Q-45 20 -30 -30"/><path d="M0 80 Q0 10 10 -45"/><path d="M40 80 Q50 25 65 -20"/>
+    </g>
+    <circle cx="-30" cy="-50" r="16" fill="#4E342E"/><circle cx="10" cy="-65" r="16" fill="#4E342E"/><circle cx="65" cy="-40" r="16" fill="#4E342E"/>
+    <circle cx="-30" cy="-50" r="6" fill="#8D6E63"/><circle cx="10" cy="-65" r="6" fill="#8D6E63"/><circle cx="65" cy="-40" r="6" fill="#8D6E63"/>
+  </g>
+  <!-- Esporos -->
+  <circle cx="680" cy="120" r="8" fill="#EF9A9A"/><circle cx="710" cy="180" r="6" fill="#8D6E63"/>
+  <circle cx="650" cy="220" r="7" fill="#EF9A9A"/><circle cx="730" cy="90" r="5" fill="#8D6E63"/><circle cx="690" cy="260" r="6" fill="#EF9A9A"/>
+</svg>

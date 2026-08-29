@@ -4,79 +4,173 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Capítulo 2: Composição Química da Vida - Água, sais minerais, carboidratos, lipídios, proteínas e enzimas para o ENEM.">
+  <meta name="keywords" content="Biologia, ENEM, água, sais minerais, carboidratos, lipídios, proteínas, enzimas">
+  <meta property="og:title" content="Capítulo 2: Composição Química da Vida | Trilhas de Biologia">
+  <meta property="og:description" content="Entenda as moléculas que formam todos os seres vivos com modelos 3D e quizzes.">
+  <meta property="og:type" content="website">
   <title>Capítulo 2: Composição Química da Vida | Trilhas de Biologia ENEM</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
   <header>
-    <h1>🧬 Trilhas de Biologia - ENEM</h1>
-    <p>Capítulo 2: Composição Química da Vida</p>
+    <h1>🔬 Trilhas de Biologia - ENEM</h1>
+    <p>Capítulo 2: A Química da Vida</p>
   </header>
+
   <nav>
     <ul>
       <li><a href="index.html">Início</a></li>
       <li><a href="cap1_biologia.html">Capítulo 1</a></li>
+      <li><a href="cap3_biologia.html">Capítulo 3</a></li>
       <li><a href="#conteudo">Conteúdo</a></li>
+      <li><a href="#modelo-3d">Modelo 3D</a></li>
+      <li><a href="#quiz">Quiz</a></li>
     </ul>
   </nav>
+
   <div class="container">
-    <div style="margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="index.html" class="btn">← Voltar ao Início</a>
-      <a href="cap1_biologia.html" class="btn">← Anterior</a>
+
+    <div class="chap-nav">
+      <a href="cap1_biologia.html" class="btn btn-ghost">← Capítulo 1</a>
+      <a href="index.html" class="btn btn-ghost">🏠 Início</a>
       <a href="cap3_biologia.html" class="btn">Próximo: Capítulo 3 →</a>
     </div>
+
     <article class="page-content" id="conteudo">
       <section class="story-section">
-        <h2>💧 A Água: O Solvente da Vida</h2>
-        <p>A água é a substância mais abundante nos seres vivos, representando cerca de 70% da massa corporal humana. Suas propriedades únicas — como alto calor específico, tensão superficial e poder de dissolução — são essenciais para a manutenção da vida.</p>
-        
-        <div class="image-placeholder-card">
-          <div class="placeholder-icon">🎨</div>
-          <h3>Imagem Pendente: Moléculas de Água</h3>
-          <p><strong>Prompt para IA:</strong></p>
-          <code>3D render of water molecules (H2O) showing hydrogen bonds between oxygen and hydrogen atoms. Blue and white color scheme, clean scientific visualization, educational textbook style, white background --ar 16:9</code>
-          <p class="instruction">Gere esta imagem, salve como <code>img/water_molecules.jpg</code> e substitua este bloco pela tag &lt;img&gt;.</p>
+        <h2>💧 A Água: O Solvente Universal da Vida</h2>
+        <div class="story-text">
+          <p>Pegue uma gota de água do mar e imagine as colisões invisíveis que acontecem ali dentro: trilhões de moléculas de <span class='highlight'>H₂O</span> se atraem e se afastam o tempo todo. Essa dança molecular é o que permite que a vida exista.</p>
+          <p>A água representa cerca de <strong>70% da massa do corpo humano</strong> e é o solvente universal: quase todas as reações químicas dos seres vivos acontecem nela. Suas propriedades — <strong>alto calor específico</strong>, <strong>tensão superficial</strong>, <strong>coesão e adesão</strong> — garantem estabilidade térmica e transporte de substâncias.</p>
+          <figure class="image-container">
+            <img src="img/water_molecules.jpg" alt="Moléculas de água com pontes de hidrogênio" class="content-image" loading="lazy">
+            <figcaption>Figura 1: Moléculas de água unidas por pontes de hidrogênio (linhas azuis).</figcaption>
+          </figure>
         </div>
-
-        <h3>Sais Minerais Essenciais</h3>
-        <p>Íons como cálcio (Ca²⁺), sódio (Na⁺), potássio (K⁺) e ferro (Fe²⁺) desempenham papéis cruciais na contração muscular, transmissão nervosa e formação de hemoglobina.</p>
       </section>
-
       <section class="story-section">
-        <h2>🍞 Carboidratos: Fonte de Energia</h2>
-        <p>Os carboidratos são a principal fonte de energia imediata para as células. Dividem-se em monossacarídeos (glicose), dissacarídeos (sacarose) e polissacarídeos (amido, glicogênio e celulose).</p>
-        
-        <div class="image-placeholder-card">
-          <div class="placeholder-icon">🎨</div>
-          <h3>Imagem Pendente: Estrutura da Glicose</h3>
-          <p><strong>Prompt para IA:</strong></p>
-          <code>Molecular structure of glucose (C6H12O6) in ring form, showing carbon, hydrogen and oxygen atoms. Colorful ball-and-stick model, white background, chemistry textbook illustration, high detail --ar 16:9</code>
-          <p class="instruction">Gere esta imagem, salve como <code>img/glucose_structure.jpg</code> e substitua este bloco pela tag &lt;img&gt;.</p>
+        <h2>🧂 Sais Minerais: Os Cozinheiros Invisíveis</h2>
+        <div class="story-text">
+          <p>Os sais minerais são íons que, mesmo em quantidades pequenas, participam de funções vitais: contração muscular, transmissão nervosa, coagulação e formação de ossos e hemoglobina.</p>
+          <table class="comparison-table">
+<thead><tr><th>Íon</th><th>Função principal</th><th>Carência pode causar</th></tr></thead>
+<tbody><tr><td>Cálcio (Ca²⁺)</td><td>Ossos, dentes, coagulação e contração muscular</td><td>Osteoporose, tetania</td></tr><tr><td>Sódio (Na⁺) e Potássio (K⁺)</td><td>Transmissão do impulso nervoso e equilíbrio hídrico</td><td>Cãibras, alterações nervosas</td></tr><tr><td>Ferro (Fe²⁺)</td><td>Componente da hemoglobina (transporte de O₂)</td><td>Anemia ferropriva</td></tr><tr><td>Iodo (I⁻)</td><td>Produção dos hormônios da tireoide (T3 e T4)</td><td>Bócio</td></tr><tr><td>Magnésio (Mg²⁺)</td><td>Ativação de enzimas e fotossíntese (clorofila)</td><td>Fraqueza muscular</td></tr><tr><td>Fósforo (PO₄³⁻)</td><td>DNA, ATP e ossos</td><td>Fadiga, problemas ósseos</td></tr></tbody>
+</table>
+          <div class="tip-card"><strong>💡 Dica ENEM:</strong> A banca adora relacionar <strong>carência de mineral × doença</strong>: ferro → anemia, iodo → bócio, cálcio → osteoporose.</div>
         </div>
       </section>
-
+      <section class="story-section">
+        <h2>🍞 Carboidratos: O Combustível da Vida</h2>
+        <div class="story-text">
+          <p>Quando você come um pão, seu corpo está recebendo a principal fonte de energia imediata: os carboidratos. Eles também têm função estrutural — a <strong>celulose</strong> forma a parede das células vegetais e a <strong>quitina</strong> forma o exoesqueleto dos artrópodes.</p>
+          <ol class="steps-list"><li><strong>Monossacarídeos</strong> — glicose (C₆H₁₂O₆), frutose e galactose. A glicose é o combustível das células.</li><li><strong>Dissacarídeos</strong> — sacarose (glicose + frutose), lactose (glicose + galactose), maltose (glicose + glicose).</li><li><strong>Polissacarídeos</strong> — amido (reserva vegetal), glicogênio (reserva animal — fígado e músculos), celulose (estrutura vegetal).</li></ol>
+          <figure class="image-container">
+            <img src="img/glucose_structure.jpg" alt="Estrutura em anel da glicose" class="content-image" loading="lazy">
+            <figcaption>Figura 2: Molécula de glicose (C₆H₁₂O₆), o açúcar que alimenta as células.</figcaption>
+          </figure>
+        </div>
+      </section>
       <section class="story-section">
         <h2>🥑 Lipídios: Reserva e Estrutura</h2>
-        <p>Gorduras, óleos, ceras e esteroides formam o grupo dos lipídios. São importantes para reserva energética, isolamento térmico e composição das membranas celulares (fosfolipídios e colesterol).</p>
+        <div class="story-text">
+          <p>Gorduras, óleos, ceras e esteroides formam o grupo dos lipídios. Eles são <strong>insolúveis em água</strong> e armazenam o dobro de energia por grama que os carboidratos.</p>
+          <p>Funções: <strong>reserva energética</strong>, <strong>isolamento térmico</strong>, proteção mecânica de órgãos e composição das <strong>membranas celulares</strong> (fosfolipídios e colesterol). Atenção: gorduras <em>trans</em> e saturadas em excesso elevam o risco cardiovascular.</p>
+        </div>
       </section>
-
       <section class="story-section">
-        <h2>🥩 Proteínas e Enzimas</h2>
-        <p>Proteínas são polímeros de aminoácidos que exercem funções estruturais, enzimáticas, hormonais e de defesa. As enzimas são catalisadores biológicos que aceleram reações químicas sem serem consumidas.</p>
-        
-        <div class="image-placeholder-card">
-          <div class="placeholder-icon">🎨</div>
-          <h3>Imagem Pendente: Enzima em Ação</h3>
-          <p><strong>Prompt para IA:</strong></p>
-          <code>Illustration of an enzyme (purple shape) binding to a substrate (yellow shape) like a lock and key, breaking it down into products. Clean white background, colorful molecular structures, biology textbook diagram style --ar 16:9</code>
-          <p class="instruction">Gere esta imagem, salve como <code>img/enzyme_action.jpg</code> e substitua este bloco pela tag &lt;img&gt;.</p>
+        <h2>🥩 Proteínas e Enzimas: As Máquinas da Célula</h2>
+        <div class="story-text">
+          <p>Proteínas são polímeros de <span class='highlight'>aminoácidos</span> unidos por ligações peptídicas. Elas são a matéria-prima de músculos, enzimas, anticorpos, hormônios e do transporte de oxigênio.</p>
+          <p>As <strong>enzimas</strong> são catalisadores biológicos: aceleram reações sem serem consumidas. Cada enzima tem um <strong>sítio ativo</strong> que só encaixa em seu substrato específico — o modelo "chave e fechadura". Fatores como <strong>temperatura e pH</strong> alteram sua atividade; valores extremos causam <strong>desnaturação</strong> (perda da forma e da função).</p>
+          <figure class="image-container">
+            <img src="img/enzyme_action.jpg" alt="Enzima encaixando o substrato no sítio ativo" class="content-image" loading="lazy">
+            <figcaption>Figura 3: Enzima (roxo) e substrato (amarelo): o encaixe específico do sítio ativo.</figcaption>
+          </figure>
+          <div class="tip-card"><strong>💡 Dica ENEM:</strong> Enzima <strong>não é consumida</strong> na reação — ela pode atuar várias vezes. Desnaturação = perda de forma por calor ou pH extremo (como a clara de ovo que coagula ao cozinhar).</div>
         </div>
       </section>
     </article>
+
+    <section class="page-content" id="modelo-3d">
+      <h2 class="section-title">
+        🔬 Modelo 3D Interativo: Moléculas de Água
+      </h2>
+      <p class="model-intro">Arraste o mouse sobre o modelo abaixo para rotacionar e observar as estruturas em 360°:</p>
+
+      <div id="canvas-container" data-three-scene="water">
+        <div class="canvas-label">🖱️ Arraste para rotacionar • Scroll para zoom</div>
+      </div>
+
+      <div class="legend-grid">
+        <div class="legend-item" style="background: #FFEBEE;">
+          <strong style="color: #EF5350;">🔴 Oxigênio (O)</strong>
+          <p>Átomo central da molécula, levemente negativo.</p>
+        </div>
+        <div class="legend-item" style="background: #FFFFFF;">
+          <strong style="color: #546E7A;">⚪ Hidrogênio (H)</strong>
+          <p>Átomos menores, levemente positivos.</p>
+        </div>
+        <div class="legend-item" style="background: #ECEFF1;">
+          <strong style="color: #78909C;">🔗 Ligações covalentes</strong>
+          <p>Unem os hidrogênios ao oxigênio dentro da molécula.</p>
+        </div>
+        <div class="legend-item" style="background: #E1F5FE;">
+          <strong style="color: #4FC3F7;">💧 Pontes de hidrogênio</strong>
+          <p>Ligações fracas entre moléculas de água — essenciais para a vida.</p>
+        </div>
+      </div>
+
+      <div class="external-3d-card">
+        <div class="external-3d-icon">🌐</div>
+        <div class="external-3d-info">
+          <h3>Rubisco: a enzima da fixação do carbono (Sketchfab)</h3>
+          <p>Modelo molecular real da enzima mais abundante do planeta, com o sítio ativo destacado. <a href="https://sketchfab.com/3d-models/rubisco-the-enzyme-behind-carbon-fixation-bb36b194b78b46d0b2496ba3700cddca" target="_blank" rel="noopener">Ver modelo no Sketchfab →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-content" id="quiz">
+      <h2 class="section-title">
+        📝 Teste Seus Conhecimentos
+      </h2>
+      <div class="quiz-card">
+        <p class="quiz-question">1. Qual propriedade da água ajuda a manter a temperatura do corpo estável?</p>
+        <label class="quiz-option"><input type="radio" name="q1" value="a"> a) Alto calor específico</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="b"> b) Baixa tensão superficial</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="c"> c) Poder de dissolver lipídios</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="d"> d) Ausência de ligações de hidrogênio</label>
+      </div>
+      <div class="quiz-card">
+        <p class="quiz-question">2. Qual carboidrato é o polissacarídeo de reserva energética dos animais?</p>
+        <label class="quiz-option"><input type="radio" name="q2" value="a"> a) Amido</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="b"> b) Celulose</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="c"> c) Glicogênio</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="d"> d) Sacarose</label>
+      </div>
+      <div class="quiz-card">
+        <p class="quiz-question">3. Uma enzima perdeu sua função após ser aquecida a 100 °C. Esse processo é chamado de:</p>
+        <label class="quiz-option"><input type="radio" name="q3" value="a"> a) Hidrólise</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="b"> b) Desnaturação</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="c"> c) Síntese</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="d"> d) Fermentação</label>
+      </div>
+      <div id="quiz-result" class="quiz-result"></div>
+      <button class="btn quiz-action" onclick="checkQuiz({q1: 'a', q2: 'c', q3: 'b'})">Verificar Respostas</button>
+    </section>
+
   </div>
+
   <footer>
-    <p>© 2024 Trilhas de Biologia - ENEM | <a href="index.html">Voltar ao Início</a></p>
+    <p>© 2024 Trilhas de Biologia - ENEM | Desenvolvido para estudantes brasileiros</p>
+    <p class="footer-sub">
+      <a href="index.html" class="footer-link">Voltar ao Início</a> |
+      <a href="#" class="footer-link">Sobre</a> |
+      <a href="#" class="footer-link">Contato</a>
+    </p>
   </footer>
+
   <script src="js/main.js"></script>
+  <script type="module" src="js/three-viewer.js"></script>
 </body>
 </html>
