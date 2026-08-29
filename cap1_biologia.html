@@ -30,8 +30,8 @@
   <div class="container">
     
     <!-- Navegação entre capítulos -->
-    <div style="margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="index.html" class="btn">← Voltar ao Início</a>
+    <div class="chap-nav">
+      <a href="index.html" class="btn btn-ghost">🏠 Início</a>
       <a href="cap2_biologia.html" class="btn">Próximo: Capítulo 2 →</a>
     </div>
 
@@ -79,15 +79,15 @@
         <div class="story-text">
           <p>Duas décadas depois, dois cientistas alemães trabalhavam independentemente em suas pesquisas botânicas e zoológicas:</p>
           
-          <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+          <ul class="story-list">
             <li><strong>Matthias Schleiden</strong> (botânico) concluiu que <strong>todos os vegetais são formados por células</strong>.</li>
             <li><strong>Theodor Schwann</strong> (zoólogo) chegou à mesma conclusão para os <strong>animais</strong>.</li>
           </ul>
           
           <p>Em 1839, eles se reuniram e formularam juntos os <strong>dois primeiros pilares da Teoria Celular</strong>:</p>
           
-          <div class="quote" style="background: #FFF3E0; border-left-color: var(--accent-color);">
-            <ol style="margin-left: 1.5rem;">
+          <div class="quote quote--accent">
+            <ol class="steps-list">
               <li><strong>Todos os seres vivos são formados por células.</strong></li>
               <li><strong>A célula é a unidade estrutural e funcional básica dos organismos.</strong></li>
             </ol>
@@ -102,39 +102,39 @@
         <div class="story-text">
           <p>Com o avanço da microscopia eletrônica no século XX, os cientistas descobriram que existem <strong>dois tipos fundamentais de células</strong>:</p>
           
-          <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+          <table class="comparison-table">
             <thead>
-              <tr style="background: var(--primary-color); color: white;">
-                <th style="padding: 1rem; text-align: left;">Característica</th>
-                <th style="padding: 1rem;">Procarionte</th>
-                <th style="padding: 1rem;">Eucarionte</th>
+              <tr>
+                <th>Característica</th>
+                <th>Procarionte</th>
+                <th>Eucarionte</th>
               </tr>
             </thead>
             <tbody>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 1rem;"><strong>Núcleo definido</strong></td>
-                <td style="text-align: center;">❌ Não</td>
-                <td style="text-align: center;">✅ Sim</td>
+              <tr>
+                <td><strong>Núcleo definido</strong></td>
+                <td>❌ Não</td>
+                <td>✅ Sim</td>
               </tr>
-              <tr style="border-bottom: 1px solid #ddd; background: #f9f9f9;">
-                <td style="padding: 1rem;"><strong>Organelas membranosas</strong></td>
-                <td style="text-align: center;">❌ Não</td>
-                <td style="text-align: center;">✅ Sim</td>
+              <tr>
+                <td><strong>Organelas membranosas</strong></td>
+                <td>❌ Não</td>
+                <td>✅ Sim</td>
               </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 1rem;"><strong>Tamanho típico</strong></td>
-                <td style="text-align: center;">1-10 μm</td>
-                <td style="text-align: center;">10-100 μm</td>
+              <tr>
+                <td><strong>Tamanho típico</strong></td>
+                <td>1-10 μm</td>
+                <td>10-100 μm</td>
               </tr>
-              <tr style="border-bottom: 1px solid #ddd; background: #f9f9f9;">
-                <td style="padding: 1rem;"><strong>Exemplos</strong></td>
-                <td style="text-align: center;">Bactérias</td>
-                <td style="text-align: center;">Animais, Plantas, Fungos</td>
+              <tr>
+                <td><strong>Exemplos</strong></td>
+                <td>Bactérias</td>
+                <td>Animais, Plantas, Fungos</td>
               </tr>
             </tbody>
           </table>
 
-          <div class="important-note" style="background: #FFF9C4; padding: 1rem; border-radius: 6px; border-left: 4px solid #FFC107;">
+          <div class="tip-card">
             <strong>💡 Dica ENEM:</strong> As bactérias são os únicos procariontes. Todos os outros seres vivos (protozoários, algas, fungos, plantas e animais) possuem células eucariontes!
           </div>
           
@@ -148,65 +148,66 @@
     </article>
 
     <!-- Modelo 3D Interativo -->
-    <section class="page-content" id="modelo-3d" style="margin-top: 2rem;">
-      <h2 style="font-family: var(--font-heading); color: var(--primary-color); margin-bottom: 1rem;">🔬 Modelo 3D Interativo: Célula Eucarionte Animal</h2>
-      <p style="margin-bottom: 1rem;">Arraste o mouse sobre o modelo abaixo para rotacionar a célula e observar suas estruturas em 360°:</p>
+    <section class="page-content" id="modelo-3d">
+      <h2 class="section-title">🔬 Modelo 3D Interativo: Célula Eucarionte Animal</h2>
+      <p class="model-intro">Arraste o mouse sobre o modelo abaixo para rotacionar a célula e observar suas estruturas em 360°:</p>
       
       <div id="canvas-container">
         <div class="canvas-label">🖱️ Arraste para rotacionar • Scroll para zoom</div>
       </div>
       
-      <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-        <div style="background: #E8F5E9; padding: 1rem; border-radius: 6px;">
+      <div class="legend-grid">
+        <div class="legend-item" style="background: #E8F5E9;">
           <strong style="color: #5C6BC0;">🟣 Núcleo</strong>
-          <p style="font-size: 0.9rem;">Centro de controle da célula, contém o DNA.</p>
+          <p>Centro de controle da célula, contém o DNA.</p>
         </div>
-        <div style="background: #FFF3E0; padding: 1rem; border-radius: 6px;">
+        <div class="legend-item" style="background: #FFF3E0;">
           <strong style="color: #FF7043;">🟠 Mitocôndrias</strong>
-          <p style="font-size: 0.9rem;">Produzem energia (ATP) através da respiração celular.</p>
+          <p>Produzem energia (ATP) através da respiração celular.</p>
         </div>
-        <div style="background: #F3E5F5; padding: 1rem; border-radius: 6px;">
+        <div class="legend-item" style="background: #F3E5F5;">
           <strong style="color: #AB47BC;">🟣 Retículo Endoplasmático</strong>
-          <p style="font-size: 0.9rem;">Transporte de proteínas e lipídios dentro da célula.</p>
+          <p>Transporte de proteínas e lipídios dentro da célula.</p>
         </div>
-        <div style="background: #C8E6C9; padding: 1rem; border-radius: 6px;">
+        <div class="legend-item" style="background: #C8E6C9;">
           <strong style="color: #81C784;">🟢 Membrana Plasmática</strong>
-          <p style="font-size: 0.9rem;">Delimita a célula e controla entrada/saída de substâncias.</p>
+          <p>Delimita a célula e controla entrada/saída de substâncias.</p>
         </div>
       </div>
     </section>
 
     <!-- Quiz Rápido -->
-    <section class="page-content" id="quiz" style="margin-top: 2rem;">
-      <h2 style="font-family: var(--font-heading); color: var(--primary-color); margin-bottom: 1rem;">📝 Teste Seus Conhecimentos</h2>
+    <section class="page-content" id="quiz">
+      <h2 class="section-title">📝 Teste Seus Conhecimentos</h2>
       
-      <div style="background: #E3F2FD; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
-        <p style="font-weight: bold; margin-bottom: 0.5rem;">1. Quem foi o primeiro cientista a observar e nomear as "células"?</p>
-        <label style="display: block; margin: 0.5rem 0;"><input type="radio" name="q1" value="a"> a) Antonie van Leeuwenhoek</label>
-        <label style="display: block; margin: 0.5rem 0;"><input type="radio" name="q1" value="b"> b) Robert Hooke</label>
-        <label style="display: block; margin: 0.5rem 0;"><input type="radio" name="q1" value="c"> c) Matthias Schleiden</label>
-        <label style="display: block; margin: 0.5rem 0;"><input type="radio" name="q1" value="d"> d) Rudolf Virchow</label>
+      <div class="quiz-card">
+        <p class="quiz-question">1. Quem foi o primeiro cientista a observar e nomear as "células"?</p>
+        <label class="quiz-option"><input type="radio" name="q1" value="a"> a) Antonie van Leeuwenhoek</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="b"> b) Robert Hooke</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="c"> c) Matthias Schleiden</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="d"> d) Rudolf Virchow</label>
       </div>
 
-      <div style="background: #E3F2FD; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
-        <p style="font-weight: bold; margin-bottom: 0.5rem;">2. Qual característica diferencia uma célula procarionte de uma eucarionte?</p>
-        <label style="display: block; margin: 0.5rem 0;"><input type="radio" name="q2" value="a"> a) Presença de membrana plasmática</label>
-        <label style="display: block; margin: 0.5rem 0;"><input type="radio" name="q2" value="b"> b) Presença de DNA</label>
-        <label style="display: block; margin: 0.5rem 0;"><input type="radio" name="q2" value="c"> c) Presença de núcleo definido</label>
-        <label style="display: block; margin: 0.5rem 0;"><input type="radio" name="q2" value="d"> d) Capacidade de se reproduzir</label>
+      <div class="quiz-card">
+        <p class="quiz-question">2. Qual característica diferencia uma célula procarionte de uma eucarionte?</p>
+        <label class="quiz-option"><input type="radio" name="q2" value="a"> a) Presença de membrana plasmática</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="b"> b) Presença de DNA</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="c"> c) Presença de núcleo definido</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="d"> d) Capacidade de se reproduzir</label>
       </div>
 
-      <button class="btn" onclick="alert('Respostas: 1-b, 2-c. Parabéns por estudar!')" style="margin-top: 1rem;">Verificar Respostas</button>
+      <div id="quiz-result" class="quiz-result"></div>
+      <button class="btn quiz-action" onclick="checkQuiz({ q1: 'b', q2: 'c' })">Verificar Respostas</button>
     </section>
 
   </div>
 
   <footer>
     <p>© 2024 Trilhas de Biologia - ENEM | Desenvolvido para estudantes brasileiros</p>
-    <p style="margin-top: 0.5rem; font-size: 0.9rem;">
-      <a href="index.html" style="color: var(--secondary-color);">Voltar ao Início</a> | 
-      <a href="#" style="color: var(--secondary-color);">Sobre</a> | 
-      <a href="#" style="color: var(--secondary-color);">Contato</a>
+    <p class="footer-sub">
+      <a href="index.html" class="footer-link">Voltar ao Início</a> | 
+      <a href="#" class="footer-link">Sobre</a> | 
+      <a href="#" class="footer-link">Contato</a>
     </p>
   </footer>
 

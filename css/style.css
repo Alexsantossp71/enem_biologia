@@ -19,6 +19,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-main);
   background-color: var(--background-light);
@@ -274,4 +278,377 @@ footer {
   #canvas-container {
     height: 300px;
   }
+}
+
+/* =========================================================
+   COMPONENTES REUTILIZÁVEIS — Template de Capítulos
+   (equivalentes às classes usadas em cap1_biologia.html)
+   ========================================================= */
+
+/* Barra de navegação entre capítulos */
+.chap-nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.btn-ghost:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Dica ENEM (callout amarelo) */
+.tip-card {
+  background: #FFF9C4;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  border-left: 4px solid #FFC107;
+  margin: 1.5rem 0;
+}
+
+.tip-card strong {
+  color: var(--text-dark);
+}
+
+/* Tabelas comparativas (ex.: procarionte x eucarionte) */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.comparison-table th {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 1rem;
+  text-align: left;
+}
+
+.comparison-table th:not(:first-child),
+.comparison-table td:not(:first-child) {
+  text-align: center;
+}
+
+.comparison-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* Quiz */
+.quiz-card {
+  background: #E3F2FD;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.quiz-question {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-option {
+  display: block;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+
+.quiz-option input {
+  margin-right: 0.4rem;
+}
+
+.quiz-result {
+  display: none;
+  margin: 1rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.quiz-result--success {
+  background: #E8F5E9;
+  border-left: 4px solid var(--primary-color);
+}
+
+.quiz-result--partial {
+  background: #FFF9C4;
+  border-left: 4px solid #FFC107;
+}
+
+/* Legenda do modelo 3D */
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.legend-item {
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.legend-item strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.legend-item p {
+  font-size: 0.9rem;
+}
+
+/* Card de imagem pendente (usado em cap2_biologia.html e no template) */
+.image-placeholder-card {
+  border: 2px dashed #bdbdbd;
+  background: #fafafa;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.placeholder-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.image-placeholder-card code {
+  background: #eceff1;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  display: inline-block;
+  margin-top: 0.4rem;
+  text-align: left;
+  word-break: break-word;
+}
+
+.instruction {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.75rem;
+}
+
+/* Imagem com legenda (figura do capítulo) */
+.image-container {
+  margin: 1.5rem auto;
+  text-align: center;
+  max-width: 100%;
+}
+
+.image-container figcaption {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Lista de pilares / passos numerados */
+.steps-list {
+  margin: 1rem 0 1rem 1.5rem;
+  line-height: 1.8;
+}
+
+.steps-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* Botões de etapas do modelo 3D (ex.: fases da mitose) */
+.scene-stages {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.scene-stages button {
+  background: #e0e0e0;
+  border: none;
+  border-radius: 20px;
+  padding: 0.45rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.scene-stages button:hover {
+  background: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+.scene-stages button.active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Card de modelo 3D externo (Sketchfab e afins) */
+.external-3d-card {
+  border: 1px solid #e0e0e0;
+  background: #FAFAFA;
+  border-radius: var(--border-radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.external-3d-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+
+.external-3d-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.external-3d-info h3 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+}
+
+.external-3d-info p {
+  font-size: 0.92rem;
+  color: #555;
+}
+
+/* =========================================================
+   HOME (index.html) — mesma linguagem visual dos capítulos
+   ========================================================= */
+
+/* Título de seção padrão (igual aos h2 das story-section) */
+.page-heading {
+  font-family: var(--font-heading);
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+}
+
+.page-heading--center {
+  text-align: center;
+}
+
+/* Texto de destaque / chamada */
+.lead {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.8;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Hero da home (card de conteúdo com abertura narrativa) */
+.hero {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+
+.hero h2 {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+  font-size: 1.9rem;
+  margin-bottom: 1rem;
+}
+
+.hero .lead {
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Botão grande para CTAs da home */
+.btn-lg {
+  font-size: 1.1rem;
+  padding: 0.8rem 2rem;
+}
+
+/* Gride de capítulos dentro da página */
+.chapters-section .chapters-grid {
+  margin-top: 0;
+}
+
+/* Ícone decorativo do modelo 3D da home */
+.model-badge {
+  display: inline-block;
+  background: #E8F5E9;
+  color: var(--primary-color);
+  font-weight: bold;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Classes de resposta p/ os padrões repetidos dos capítulos */
+.section-title {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.model-intro {
+  margin-bottom: 1rem;
+}
+
+.quiz-action {
+  margin-top: 1rem;
+}
+
+.story-list {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Rodapé padrão (sub bloco + links) */
+.footer-sub {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.footer-link {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+/* Citação com destaque laranja (variação do .quote) */
+.quote--accent {
+  background: #FFF3E0;
+  border-left-color: var(--accent-color);
+}
+
+/* Variantes do .lead para blocos alinhados à esquerda */
+.lead--left {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.lead--spaced {
+  margin-top: 1rem;
 }

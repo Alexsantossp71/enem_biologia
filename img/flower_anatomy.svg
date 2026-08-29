@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect width="800" height="600" fill="#ffffff"/>
+  <!-- Pedúnculo / receptáculo -->
+  <rect x="388" y="380" width="24" height="180" rx="12" fill="#388E3C"/>
+  <ellipse cx="400" cy="380" rx="90" ry="22" fill="#66BB6A" stroke="#2E7D32" stroke-width="5"/>
+  <!-- Sépalas -->
+  <path d="M320 365 Q330 320 400 330 Q470 320 480 365 Q440 355 400 360 Q360 355 320 365Z" fill="#81C784" stroke="#2E7D32" stroke-width="4"/>
+  <!-- Pétalas -->
+  <g fill="#F48FB1" stroke="#EC407A" stroke-width="4">
+    <ellipse cx="400" cy="170" rx="70" ry="90"/>
+    <g transform="rotate(-55 400 260)"><ellipse cx="400" cy="170" rx="70" ry="90"/></g>
+    <g transform="rotate(55 400 260)"><ellipse cx="400" cy="170" rx="70" ry="90"/></g>
+    <g transform="rotate(-100 400 260)"><ellipse cx="400" cy="170" rx="70" ry="90"/></g>
+    <g transform="rotate(100 400 260)"><ellipse cx="400" cy="170" rx="70" ry="90"/></g>
+  </g>
+  <!-- Estames -->
+  <g stroke="#F9A825" stroke-width="6">
+    <line x1="370" y1="300" x2="345" y2="235"/><line x1="400" y1="300" x2="400" y2="228"/><line x1="430" y1="300" x2="455" y2="235"/>
+  </g>
+  <circle cx="345" cy="230" r="12" fill="#FF8F00"/><circle cx="400" cy="222" r="12" fill="#FF8F00"/><circle cx="455" cy="230" r="12" fill="#FF8F00"/>
+  <!-- Pistilo: estigma, estilete, ovário -->
+  <line x1="400" y1="240" x2="400" y2="330" stroke="#43A047" stroke-width="12"/>
+  <ellipse cx="400" cy="238" rx="16" ry="10" fill="#A5D6A7" stroke="#2E7D32" stroke-width="4"/>
+  <circle cx="400" cy="345" r="38" fill="#A5D6A7" stroke="#2E7D32" stroke-width="6"/>
+  <circle cx="386" cy="338" r="12" fill="#F48FB1"/><circle cx="414" cy="338" r="12" fill="#F48FB1"/><circle cx="400" cy="358" r="12" fill="#F48FB1"/>
+</svg>
