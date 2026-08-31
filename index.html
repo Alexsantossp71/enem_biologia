@@ -437,12 +437,14 @@
       varying vec3 vPosition;
       varying vec3 vWorldPosition;
       varying float vDisplacement;
+      varying vec2 vUv;
 
       ${NOISE_GLSL}
 
       void main() {
         vNormal = normalize(normalMatrix * normal);
         vPosition = position;
+        vUv = uv;
 
         float noise = fbm(position * 1.5 + uTime * 0.3);
         float displacement = noise * uNoiseAmplitude * uProgress;
@@ -465,11 +467,14 @@
       uniform vec3 uBaseColor;
       uniform vec3 uAccentColor;
       uniform vec3 uCameraPosition;
+      uniform sampler2D uTexture;
+      uniform float uTextureIntensity;
 
       varying vec3 vNormal;
       varying vec3 vPosition;
       varying vec3 vWorldPosition;
       varying float vDisplacement;
+      varying vec2 vUv;
 
       float fresnelSchlick(float cosTheta, float f0) {
         return f0 + (1.0 - f0) * pow(1.0 - cosTheta, 5.0);
@@ -489,12 +494,16 @@
         float colorMix = smoothstep(0.0, 1.0, vDisplacement * 2.0 + uProgress * 0.5);
         vec3 surfaceColor = mix(baseColor, accentColor, colorMix);
 
+        // Amostrar textura
+        vec3 texColor = texture2D(uTexture, vUv).rgb;
+        vec3 finalTexture = mix(surfaceColor, texColor, uTextureIntensity);
+
         vec3 fresnelColor = vec3(0.0, 1.0, 0.77) * fresnel * (0.5 + uProgress * 0.5);
 
         vec3 lightDir = normalize(vec3(1.0, 1.0, 0.5));
         float diffuse = max(dot(vNormal, lightDir), 0.0) * 0.4 + 0.6;
 
-        vec3 finalColor = surfaceColor * diffuse + fresnelColor;
+        vec3 finalColor = finalTexture * diffuse + fresnelColor;
         float pulse = sin(uTime * 2.0) * 0.03 * uProgress;
         finalColor += pulse;
 
@@ -540,11 +549,38 @@
     }
 
     // ============================================
-    // COMPONENTE: MALHA COM SHADER
+    // COMPONENTE: MALHA COM SHADER E TEXTURA
     // ============================================
     function ShaderMesh({ scrollProgress }) {
       const meshRef = useRef();
       const { camera } = useThree();
+      const [texture, setTexture] = useState(null);
+
+      // Carregar texturas
+      useEffect(() => {
+        const loader = new THREE.TextureLoader();
+        const textures = [
+          './assets/textures/cornrev_hero.png',
+          './assets/textures/cornrev_scene2.png',
+          './assets/textures/cornrev_scene3.png',
+          './assets/textures/scene1.png',
+        ];
+
+        // Carregar todas as texturas e usar a primeira que carregar
+        let loaded = false;
+        loader.load(textures[0], (tex) => {
+          if (!loaded) {
+            loaded = true;
+            tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+            tex.colorSpace = THREE.SRGBColorSpace;
+            setTexture(tex);
+          }
+        });
+
+        return () => {
+          if (texture) texture.dispose();
+        };
+      }, []);
 
       const uniforms = useMemo(() => ({
         uTime: { value: 0.0 },
@@ -553,12 +589,13 @@
         uBaseColor: { value: new THREE.Color('#0A0F33') },
         uAccentColor: { value: new THREE.Color('#00FFC4') },
         uCameraPosition: { value: new THREE.Vector3() },
-      }), []);
+        uTexture: { value: texture || new THREE.Texture() },
+        uTextureIntensity: { value: 0.6 },
+      }), [texture]);
 
       useFrame((state, delta) => {
         if (!meshRef.current) return;
 
-        // Interpolar progresso com lerp para fluidez
         const targetProgress = scrollProgress.current || 0;
         uniforms.uProgress.value = THREE.MathUtils.lerp(
           uniforms.uProgress.value,
@@ -568,6 +605,14 @@
 
         uniforms.uTime.value += delta;
         uniforms.uCameraPosition.value.copy(camera.position);
+
+        // Atualizar intensidade da textura conforme o scroll
+        const targetIntensity = 0.3 + uniforms.uProgress.value * 0.7;
+        uniforms.uTextureIntensity.value = THREE.MathUtils.lerp(
+          uniforms.uTextureIntensity.value,
+          targetIntensity,
+          0.02
+        );
 
         // Rotacionar malha suavemente
         meshRef.current.rotation.y += delta * 0.15;
