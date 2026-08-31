@@ -1,0 +1,14 @@
+{
+  "name": "auto-tests",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Automated test suite for the project",
+  "scripts": {
+    "test": "node test/historia.test.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "xlsx": "^0.18.5",
+    "node-fetch": "^2.6.7"
+  }
+}

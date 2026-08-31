@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Temp files
+%TEMP%/
+npm-cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# OpenCode
+.opencode/
+.omo/
+
+# Build outputs
+dist/
+build/
+public/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test
+test/
+coverage/
+
+# Assets (keep source, ignore generated)
+assets/3d-models/*.glb
+
+# Git
+.git/
+.gitignore

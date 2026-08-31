@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pioneer — Corn Revolutionized</title>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Lexend+Deca:wght@400;500;600&family=Press+Start+2P&family=Vollkorn+SC&display=swap" rel="stylesheet">
+
+  <!-- GSAP + ScrollTrigger (globais) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+  <!-- Import Map para módulos ES -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.2.0",
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+      "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.15.12?deps=react@18.2.0",
+      "@react-three/drei": "https://esm.sh/@react-three/drei@9.88.0?deps=react@18.2.0,three@0.160.0",
+      "@react-three/postprocessing": "https://esm.sh/@react-three/postprocessing@6.3.0?deps=react@18.2.0,three@0.160.0",
+      "postprocessing": "https://esm.sh/postprocessing@6.3.1?deps=three@0.160.0"
+    }
+  }
+  </script>
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      overflow-x: hidden;
+      background: #0A0F33;
+      font-family: 'Lexend Deca', sans-serif;
+      color: #F5F5F5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================
+       CAMADA 3D FUNDO (CANVAS LAYER)
+       z-index: 0 — renderiza a cena 3D
+    ============================================ */
+    #canvas-layer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    #canvas-layer canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ============================================
+       CONTAINER FANTASMA DE ROLAGEM
+       400vh — gera o scroll do navegador
+    ============================================ */
+    #scroll-container {
+      position: relative;
+      width: 100%;
+      height: 400vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ============================================
+       CAMADA HTML SOBREPOSTA (OVERLAY)
+       z-index: 10 — elementos visuais fixados
+    ============================================ */
+    #overlay-layer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      z-index: 10;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .overlay-section {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 4rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .overlay-section.active {
+      opacity: 1;
+    }
+
+    .overlay-section.interactive {
+      pointer-events: auto;
+    }
+
+    /* ============================================
+       TIPOGRAFIA
+    ============================================ */
+    .font-headings { font-family: 'Space Grotesk', sans-serif; }
+    .font-body { font-family: 'Lexend Deca', sans-serif; }
+    .font-badge { font-family: 'Press Start 2P', monospace; }
+    .font-decorative { font-family: 'Vollkorn SC', serif; }
+
+    /* ============================================
+       FASE 1 — APRESENTAÇÃO (0.0 - 0.25)
+    ============================================ */
+    .phase-1-title {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #F5F5F5;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .phase-1-subtitle {
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 400;
+      color: #00FFC4;
+      text-align: center;
+      margin-top: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================
+       FASE 2 — DEFORMAÇÃO (0.25 - 0.50)
+    ============================================ */
+    .phase-2-title {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 600;
+      color: #FF9800;
+      text-align: center;
+    }
+
+    .phase-2-description {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: #E5E5E5;
+      text-align: center;
+      max-width: 600px;
+      margin-top: 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       FASE 3 — COR & ZOOM (0.50 - 0.75)
+    ============================================ */
+    .phase-3-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    .phase-3-card {
+      background: rgba(10, 15, 51, 0.7);
+      border: 1px solid rgba(0, 255, 196, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .phase-3-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 255, 196, 0.6);
+    }
+
+    .phase-3-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #00FFC4;
+      margin-bottom: 0.75rem;
+    }
+
+    .phase-3-card p {
+      font-size: 1rem;
+      color: #E5E5E5;
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       FASE 4 — CTA FINAL (0.75 - 1.0)
+    ============================================ */
+    .phase-4-cta { text-align: center; pointer-events: auto; }
+
+    .phase-4-cta h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: #FF5722;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 3rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #F5F5F5;
+      background: linear-gradient(135deg, #FF5722, #FF9800);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 87, 34, 0.4);
+    }
+
+    .cta-button:active { transform: scale(0.98); }
+
+    .cta-badge {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.5rem 1.2rem;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      color: #FF2E9A;
+      border: 1px solid #FF2E9A;
+      border-radius: 4px;
+    }
+
+    /* ============================================
+       NAVEGAÇÃO STICKY
+    ============================================ */
+    #nav-bar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 15, 51, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 255, 196, 0.1);
+      pointer-events: auto;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #00FFC4;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Lexend Deca', sans-serif;
+      font-size: 0.95rem;
+      color: #E5E5E5;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover { color: #00FFC4; }
+
+    /* ============================================
+       PROGRESS BAR
+    ============================================ */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00FFC4, #FF9800, #FF5722);
+      z-index: 200;
+      width: 0%;
+      pointer-events: none;
+    }
+
+    /* ============================================
+       REDUCED MOTION
+    ============================================ */
+    @media (prefers-reduced-motion: reduce) {
+      .overlay-section { transition: none; opacity: 1 !important; }
+      .phase-3-card { transition: none; }
+      .cta-button { transition: none; }
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 768px) {
+      .overlay-section { padding: 1rem 1.5rem; }
+      .phase-3-cards { grid-template-columns: 1fr; }
+      .nav-links { gap: 1rem; }
+      #nav-bar { padding: 0.75rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de progresso do scroll -->
+  <div id="scroll-progress"></div>
+
+  <!-- Navegação sticky -->
+  <nav id="nav-bar">
+    <div class="nav-logo font-headings">PIONEER</div>
+    <ul class="nav-links">
+      <li><a href="#phase-1" class="font-body">Início</a></li>
+      <li><a href="#phase-2" class="font-body">Temas</a></li>
+      <li><a href="#phase-3" class="font-body">Recursos</a></li>
+      <li><a href="#phase-4" class="font-body">CTA</a></li>
+    </ul>
+  </nav>
+
+  <!-- Container raiz para React -->
+  <div id="root"></div>
+
+  <!-- ============================================
+       SCRIPTS DE MÓDULO — REACT + R3F + SHADERS
+  ============================================ -->
+  <script type="module">
+    import React, { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import { Canvas, useFrame, useThree } from '@react-three/fiber';
+    import { OrbitControls } from '@react-three/drei';
+    import * as THREE from 'three';
+    import { EffectComposer } from '@react-three/postprocessing';
+    import { Bloom } from '@react-three/postprocessing';
+    import { Vignette } from '@react-three/postprocessing';
+
+    // ============================================
+    // GLSL — NOISE 3D (SIMPLEX NOISE)
+    // ============================================
+    const NOISE_GLSL = `
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
+      vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+
+      float snoise(vec3 v) {
+        const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+        const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+        vec3 i = floor(v + dot(v, C.yyy));
+        vec3 x0 = v - i + dot(i, C.xxx);
+        vec3 g = step(x0.yzx, x0.xyz);
+        vec3 l = 1.0 - g;
+        vec3 i1 = min(g.xyz, l.zxy);
+        vec3 i2 = max(g.xyz, l.zxy);
+        vec3 x1 = x0 - i1 + C.xxx;
+        vec3 x2 = x0 - i2 + C.yyy;
+        vec3 x3 = x0 - D.yyy;
+        i = mod289(i);
+        vec4 p = permute(permute(permute(
+          i.z + vec4(0.0, i1.z, i2.z, 1.0))
+          + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+          + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+        float n_ = 0.142857142857;
+        vec3 ns = n_ * D.wyz - D.xzx;
+        vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+        vec4 x_ = floor(j * ns.z);
+        vec4 y_ = floor(j - 7.0 * x_);
+        vec4 x = x_ * ns.x + ns.yyyy;
+        vec4 y = y_ * ns.x + ns.yyyy;
+        vec4 h = 1.0 - abs(x) - abs(y);
+        vec4 b0 = vec4(x.xy, y.xy);
+        vec4 b1 = vec4(x.zw, y.zw);
+        vec4 s0 = floor(b0) * 2.0 + 1.0;
+        vec4 s1 = floor(b1) * 2.0 + 1.0;
+        vec4 sh = -step(h, vec4(0.0));
+        vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+        vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+        vec3 p0 = vec3(a0.xy, h.x);
+        vec3 p1 = vec3(a0.zw, h.y);
+        vec3 p2 = vec3(a1.xy, h.z);
+        vec3 p3 = vec3(a1.zw, h.w);
+        vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+        p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+        vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+        m = m * m;
+        return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+      }
+
+      float fbm(vec3 p) {
+        float value = 0.0;
+        float amplitude = 0.5;
+        float frequency = 1.0;
+        for (int i = 0; i < 5; i++) {
+          value += amplitude * snoise(p * frequency);
+          frequency *= 2.0;
+          amplitude *= 0.5;
+        }
+        return value;
+      }
+    `;
+
+    // ============================================
+    // VERTEX SHADER CUSTOMIZADO
+    // ============================================
+    const vertexShader = `
+      uniform float uTime;
+      uniform float uProgress;
+      uniform float uNoiseAmplitude;
+
+      varying vec3 vNormal;
+      varying vec3 vPosition;
+      varying vec3 vWorldPosition;
+      varying float vDisplacement;
+
+      ${NOISE_GLSL}
+
+      void main() {
+        vNormal = normalize(normalMatrix * normal);
+        vPosition = position;
+
+        float noise = fbm(position * 1.5 + uTime * 0.3);
+        float displacement = noise * uNoiseAmplitude * uProgress;
+        vDisplacement = displacement;
+
+        vec3 newPosition = position + normal * displacement;
+        vec4 worldPosition = modelMatrix * vec4(newPosition, 1.0);
+        vWorldPosition = worldPosition.xyz;
+
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+      }
+    `;
+
+    // ============================================
+    // FRAGMENT SHADER CUSTOMIZADO
+    // ============================================
+    const fragmentShader = `
+      uniform float uTime;
+      uniform float uProgress;
+      uniform vec3 uBaseColor;
+      uniform vec3 uAccentColor;
+      uniform vec3 uCameraPosition;
+
+      varying vec3 vNormal;
+      varying vec3 vPosition;
+      varying vec3 vWorldPosition;
+      varying float vDisplacement;
+
+      float fresnelSchlick(float cosTheta, float f0) {
+        return f0 + (1.0 - f0) * pow(1.0 - cosTheta, 5.0);
+      }
+
+      void main() {
+        vec3 viewDir = normalize(uCameraPosition - vWorldPosition);
+        float cosTheta = dot(viewDir, vNormal);
+        cosTheta = clamp(cosTheta, 0.0, 1.0);
+
+        float f0 = 0.04 + uProgress * 0.5;
+        float fresnel = fresnelSchlick(cosTheta, f0);
+
+        vec3 baseColor = uBaseColor;
+        vec3 accentColor = uAccentColor;
+
+        float colorMix = smoothstep(0.0, 1.0, vDisplacement * 2.0 + uProgress * 0.5);
+        vec3 surfaceColor = mix(baseColor, accentColor, colorMix);
+
+        vec3 fresnelColor = vec3(0.0, 1.0, 0.77) * fresnel * (0.5 + uProgress * 0.5);
+
+        vec3 lightDir = normalize(vec3(1.0, 1.0, 0.5));
+        float diffuse = max(dot(vNormal, lightDir), 0.0) * 0.4 + 0.6;
+
+        vec3 finalColor = surfaceColor * diffuse + fresnelColor;
+        float pulse = sin(uTime * 2.0) * 0.03 * uProgress;
+        finalColor += pulse;
+
+        gl_FragColor = vec4(finalColor, 1.0);
+      }
+    `;
+
+    // ============================================
+    // COMPONENTE: PARTÍCULAS DE FUNDO
+    // (Definido ANTES de Scene3D para evitar erro de referência)
+    // ============================================
+    function BackgroundParticles() {
+      const pointsRef = useRef();
+
+      useFrame((state) => {
+        if (!pointsRef.current) return;
+        const positions = pointsRef.current.geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+          positions[i + 1] += Math.sin(state.clock.elapsedTime + positions[i] * 0.5) * 0.001;
+        }
+        pointsRef.current.geometry.attributes.position.needsUpdate = true;
+      });
+
+      return (
+        <points ref={pointsRef}>
+          <bufferGeometry>
+            <bufferAttribute
+              attach="attributes-position"
+              count={2000}
+              array={new Float32Array(2000 * 3).map(() => (Math.random() - 0.5) * 20)}
+              itemSize={3}
+            />
+          </bufferGeometry>
+          <pointsMaterial
+            size={0.02}
+            color="#00FFC4"
+            transparent
+            opacity={0.4}
+            sizeAttenuation
+          />
+        </points>
+      );
+    }
+
+    // ============================================
+    // COMPONENTE: MALHA COM SHADER
+    // ============================================
+    function ShaderMesh({ scrollProgress }) {
+      const meshRef = useRef();
+      const { camera } = useThree();
+
+      const uniforms = useMemo(() => ({
+        uTime: { value: 0.0 },
+        uProgress: { value: 0.0 },
+        uNoiseAmplitude: { value: 0.15 },
+        uBaseColor: { value: new THREE.Color('#0A0F33') },
+        uAccentColor: { value: new THREE.Color('#00FFC4') },
+        uCameraPosition: { value: new THREE.Vector3() },
+      }), []);
+
+      useFrame((state, delta) => {
+        if (!meshRef.current) return;
+
+        // Interpolar progresso com lerp para fluidez
+        const targetProgress = scrollProgress.current || 0;
+        uniforms.uProgress.value = THREE.MathUtils.lerp(
+          uniforms.uProgress.value,
+          targetProgress,
+          0.05
+        );
+
+        uniforms.uTime.value += delta;
+        uniforms.uCameraPosition.value.copy(camera.position);
+
+        // Rotacionar malha suavemente
+        meshRef.current.rotation.y += delta * 0.15;
+        meshRef.current.rotation.x = Math.sin(uniforms.uTime.value * 0.2) * 0.1;
+      });
+
+      return (
+        <mesh ref={meshRef} position={[0, 0, 0]}>
+          <icosahedronGeometry args={[1.5, 6]} />
+          <shaderMaterial
+            uniforms={uniforms}
+            vertexShader={vertexShader}
+            fragmentShader={fragmentShader}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      );
+    }
+
+    // ============================================
+    // COMPONENTE: CENA 3D COM PÓS-PROCESSAMENTO
+    // ============================================
+    function Scene3D({ scrollProgress }) {
+      const { camera } = useThree();
+
+      useFrame(() => {
+        // Zoom da câmera baseado no progresso do scroll
+        const targetProgress = scrollProgress.current || 0;
+        const targetZoom = 3.5 + targetProgress * 2.0;
+        camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZoom, 0.03);
+      });
+
+      return (
+        <>
+          {/* Luzes */}
+          <ambientLight intensity={0.3} />
+          <pointLight position={[5, 5, 5]} color="#00FFC4" intensity={1.5} />
+          <pointLight position={[-5, -3, 2]} color="#FF9800" intensity={0.8} />
+          <pointLight position={[0, 3, -5]} color="#FF5722" intensity={0.5} />
+
+          {/* Malha principal com shader */}
+          <ShaderMesh scrollProgress={scrollProgress} />
+
+          {/* Partículas de fundo */}
+          <BackgroundParticles />
+
+          {/* Controles de órbita desativados (scroll-only) */}
+          <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
+
+          {/* Pós-processamento: Bloom + Vignette */}
+          <EffectComposer>
+            <Bloom
+              luminanceThreshold={0.2}
+              luminanceSmoothing={0.8}
+              height={300}
+            />
+            <Vignette
+              offset={0.5}
+              darkness={1.2}
+            />
+          </EffectComposer>
+        </>
+      );
+    }
+
+    // ============================================
+    // COMPONENTE: CANVAS R3F
+    // ============================================
+    function ThreeCanvas({ scrollProgress }) {
+      return (
+        <Canvas
+          camera={{ position: [0, 0, 3.5], fov: 60 }}
+          gl={{
+            antialias: true,
+            alpha: true,
+            powerPreference: 'high-performance',
+          }}
+          dpr={[1, 2]}
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+          }}
+        >
+          <Scene3D scrollProgress={scrollProgress} />
+        </Canvas>
+      );
+    }
+
+    // ============================================
+    // COMPONENTE: SEÇÃO OVERLAY
+    // ============================================
+    function OverlaySection({ id, phase, title, subtitle, children, className = '' }) {
+      return (
+        <section
+          id={id}
+          className={`overlay-section ${className}`}
+          data-phase={phase}
+        >
+          {title && <h1 className={`phase-1-title font-headings ${className === 'phase-1' ? '' : 'font-headings'}`}>{title}</h1>}
+          {subtitle && <p className="phase-1-subtitle font-body">{subtitle}</p>}
+          {children}
+        </section>
+      );
+    }
+
+    // ============================================
+    // APP PRINCIPAL — REACT
+    // ============================================
+    function App() {
+      // Ref para o progresso do scroll (0.0 a 1.0)
+      const scrollProgress = useRef(0);
+
+      // Ref para a fase atual (evita stale closure no callback do ScrollTrigger)
+      const currentPhaseRef = useRef(1);
+
+      // Estado para forçar re-renderização quando a fase muda
+      const [, setPhaseTick] = useState(1);
+
+      // Refs para as seções overlay
+      const sectionsRef = useRef({});
+
+      useEffect(() => {
+        // Inicializar GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        const scrollContainer = document.getElementById('scroll-container');
+        const progressBar = document.getElementById('scroll-progress');
+
+        if (!scrollContainer) return;
+
+        // Criar o "pin" para o overlay-layer
+        const overlayLayer = document.getElementById('overlay-layer');
+        if (overlayLayer) {
+          gsap.to(overlayLayer, {
+            height: '400vh',
+            scrollTrigger: {
+              trigger: scrollContainer,
+              start: 'top top',
+              end: '400% top',
+              scrub: 1,
+              pin: true,
+              anticipatePin: 1,
+            }
+          });
+        }
+
+        // Sincronizar progresso do scroll com a animação 3D
+        ScrollTrigger.create({
+          trigger: scrollContainer,
+          start: 'top top',
+          end: '400% top',
+          onUpdate: (self) => {
+            const progress = self.progress;
+            scrollProgress.current = progress;
+
+            // Atualizar barra de progresso
+            if (progressBar) {
+              progressBar.style.width = `${progress * 100}%`;
+            }
+
+            // Determinar fase atual
+            let phase = 1;
+            if (progress >= 0.75) phase = 4;
+            else if (progress >= 0.50) phase = 3;
+            else if (progress >= 0.25) phase = 2;
+
+            // Atualizar ref e estado (usar ref para evitar stale closure)
+            if (phase !== currentPhaseRef.current) {
+              currentPhaseRef.current = phase;
+              setPhaseTick(phase);
+
+              // Atualizar classes ativas nas seções
+              Object.values(sectionsRef.current).forEach((el, idx) => {
+                if (el) {
+                  const sectionPhase = idx + 1;
+                  el.classList.toggle('active', sectionPhase === phase);
+                  el.classList.toggle('interactive', sectionPhase === 4);
+                }
+              });
+            }
+          }
+        });
+
+        // Respeitar prefers-reduced-motion
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (mediaQuery.matches) {
+          scrollProgress.current = 0.5;
+        }
+
+        // Cleanup
+        return () => {
+          ScrollTrigger.getAll().forEach((st) => st.kill());
+        };
+      }, []);
+
+      // Handler do CTA
+      const handleCTAClick = useCallback(() => {
+        if (typeof gsap !== 'undefined' && gsap.to) {
+          gsap.to(window, {
+            scrollTo: { y: '400vh', duration: 2, ease: 'power2.inOut' },
+            ease: 'power2.inOut'
+          });
+        }
+      }, []);
+
+      return (
+        <>
+          {/* Camada 3D fixa */}
+          <div id="canvas-layer">
+            <ThreeCanvas scrollProgress={scrollProgress} />
+          </div>
+
+          {/* Container fantasma de rolagem (400vh) */}
+          <div id="scroll-container" />
+
+          {/* Camada HTML sobreposta com seções */}
+          <div id="overlay-layer">
+
+            {/* FASE 1 (0.0 - 0.25): Apresentação */}
+            <section
+              ref={(el) => { sectionsRef.current['phase-1'] = el; }}
+              id="phase-1"
+              className="overlay-section active"
+              data-phase="1"
+            >
+              <h1 className="phase-1-title font-headings">Corn<br>Revolutionized</h1>
+              <p className="phase-1-subtitle font-body">A revolução da biologia começa aqui</p>
+            </section>
+
+            {/* FASE 2 (0.25 - 0.50): Decomposição geométrica */}
+            <section
+              ref={(el) => { sectionsRef.current['phase-2'] = el; }}
+              id="phase-2"
+              className="overlay-section"
+              data-phase="2"
+            >
+              <h2 className="phase-2-title font-headings">Transformação Geométrica</h2>
+              <p className="phase-2-description font-body">
+                A malha 3D se deforma em tempo real através de ruído simplex,
+                revelando a complexidade estrutural do milho em cada vértice.
+              </p>
+            </section>
+
+            {/* FASE 3 (0.50 - 0.75): Cor, zoom e cards */}
+            <section
+              ref={(el) => { sectionsRef.current['phase-3'] = el; }}
+              id="phase-3"
+              className="overlay-section"
+              data-phase="3"
+            >
+              <h2 className="font-headings" style={{ fontSize: 'clamp(1.6rem, 4vw, 2.5rem)', color: '#00FFC4', marginBottom: '1rem' }}>
+                Exploração Interativa
+              </h2>
+              <div className="phase-3-cards">
+                <div className="phase-3-card">
+                  <h3 className="font-headings">Estrutura Molecular</h3>
+                  <p className="font-body">Explore a arquitetura molecular do milho em 3D com navegação livre e zoom interativo.</p>
+                </div>
+                <div className="phase-3-card">
+                  <h3 className="font-headings">Análise Genética</h3>
+                  <p className="font-body">Dados genômicos visualizados em tempo real sobre a superfície deformável da malha.</p>
+                </div>
+                <div className="phase-3-card">
+                  <h3 className="font-headings">Crescimento Virtual</h3>
+                  <p className="font-body">Simule o ciclo de crescimento do milho com parâmetros ajustáveis e visualização contínua.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* FASE 4 (0.75 - 1.0): CTA final */}
+            <section
+              ref={(el) => { sectionsRef.current['phase-4'] = el; }}
+              id="phase-4"
+              className="overlay-section"
+              data-phase="4"
+            >
+              <div className="phase-4-cta">
+                <h2 className="font-headings">Comece a Explorar</h2>
+                <p className="font-body" style={{ color: '#E5E5E5', marginBottom: '1rem', fontSize: '1.1rem' }}>
+                  Mergulhe na revolução 3D da biologia vegetal
+                </p>
+                <button className="cta-button font-headings" id="cta-main" onClick={handleCTAClick}>
+                  Iniciar Experiência
+                </button>
+                <div className="cta-badge font-badge">✦ NOVO ✦</div>
+              </div>
+            </section>
+
+          </div>
+        </>
+      );
+    }
+
+    // ============================================
+    // MONTAR REACT ROOT
+    // ============================================
+    const rootElement = document.getElementById('root');
+    if (rootElement) {
+      const root = createRoot(rootElement);
+      root.render(React.createElement(App));
+    }
+
+    // ============================================
+    // REDUCED MOTION
+    // ============================================
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (typeof gsap !== 'undefined' && gsap.globalTimeline) {
+          gsap.globalTimeline.timeScale(0);
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
