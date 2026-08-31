@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste Three.js — Pioneer Corn Revolution Skill</title>
+
+  <!-- Three.js via CDN (script tag, sem import maps) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: auto; }
+    body {
+      overflow-x: hidden;
+      background: #0A0F33;
+      font-family: 'Segoe UI', sans-serif;
+      color: #F5F5F5;
+    }
+
+    /* CAMADA 3D FUNDO (z-index: 0) */
+    #canvas-layer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+    }
+
+    /* CONTAINER FANTASMA (400vh) */
+    #scroll-container {
+      position: relative;
+      width: 100%;
+      height: 400vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* CAMADA OVERLAY (z-index: 10) */
+    #overlay-layer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      z-index: 10;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .overlay-section {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      text-align: center;
+    }
+    .overlay-section.active { opacity: 1; }
+    .overlay-section.interactive { pointer-events: auto; }
+
+    h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600; margin-bottom: 1rem; }
+    p { font-size: clamp(1rem, 1.5vw, 1.2rem); max-width: 600px; line-height: 1.6; color: #E5E5E5; }
+
+    .phase-1 h1 { color: #F5F5F5; }
+    .phase-1 p { color: #00FFC4; margin-top: 1rem; }
+    .phase-2 h2 { color: #FF9800; }
+    .phase-3 h2 { color: #00FFC4; }
+    .phase-4 h2 { color: #FF5722; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      max-width: 900px;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+    .card {
+      background: rgba(10, 15, 51, 0.7);
+      border: 1px solid rgba(0, 255, 196, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      pointer-events: auto;
+    }
+    .card h3 { color: #00FFC4; font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #F5F5F5;
+      background: linear-gradient(135deg, #FF5722, #FF9800);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      pointer-events: auto;
+      margin-top: 1rem;
+    }
+    .cta-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 87, 34, 0.4); }
+
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00FFC4, #FF9800, #FF5722);
+      z-index: 100;
+      width: 0%;
+    }
+
+    #status {
+      position: fixed;
+      bottom: 1rem; left: 1rem;
+      z-index: 200;
+      padding: 0.5rem 1rem;
+      background: rgba(10, 15, 51, 0.9);
+      border: 1px solid #00FFC4;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #00FFC4;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-bar"></div>
+  <div id="status">Carregando...</div>
+
+  <!-- CAMADA 3D -->
+  <div id="canvas-layer"></div>
+
+  <!-- CONTAINER FANTASMA -->
+  <div id="scroll-container"></div>
+
+  <!-- OVERLAY -->
+  <div id="overlay-layer">
+    <section class="overlay-section phase-1 active" data-phase="1">
+      <h1>Corn<br>Revolutionized</h1>
+      <p>Teste da skill Pioneer Corn Revolution — Three.js vanilla</p>
+    </section>
+    <section class="overlay-section phase-2" data-phase="2">
+      <h2>Transformação Geométrica</h2>
+      <p>Ruído simplex 3D deformando a malha em tempo real conforme o scroll progride.</p>
+    </section>
+    <section class="overlay-section phase-3" data-phase="3">
+      <h2>Exploração Interativa</h2>
+      <div class="cards">
+        <div class="card"><h3>Estrutura</h3><p>Malha icosaédrica com shader customizado.</p></div>
+        <div class="card"><h3>Textura</h3><p>Textura cornrev mapeada via UV.</p></div>
+        <div class="card"><h3>Scroll</h3><p>Sincronização GSAP ScrollTrigger.</p></div>
+      </div>
+    </section>
+    <section class="overlay-section phase-4" data-phase="4">
+      <h2>Skill Funcionando</h2>
+      <p>Clone do modelo Pioneer Corn Revolution implementado com sucesso.</p>
+      <button class="cta-btn" id="cta-btn">Reiniciar Scroll</button>
+    </section>
+  </div>
+
+  <script>
+    // ============================================
+    // CONFIGURAÇÃO
+    // ============================================
+    const statusEl = document.getElementById('status');
+    const progressBar = document.getElementById('progress-bar');
+    const sections = document.querySelectorAll('.overlay-section');
+
+    let scrollProgress = 0;
+    let currentPhase = 1;
+
+    // ============================================
+    // SHADERS GLSL
+    // ============================================
+    const NOISE_GLSL = `
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
+      vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+      float snoise(vec3 v) {
+        const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+        const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+        vec3 i = floor(v + dot(v, C.yyy));
+        vec3 x0 = v - i + dot(i, C.xxx);
+        vec3 g = step(x0.yzx, x0.xyz);
+        vec3 l = 1.0 - g;
+        vec3 i1 = min(g.xyz, l.zxy);
+        vec3 i2 = max(g.xyz, l.zxy);
+        vec3 x1 = x0 - i1 + C.xxx;
+        vec3 x2 = x0 - i2 + C.yyy;
+        vec3 x3 = x0 - D.yyy;
+        i = mod289(i);
+        vec4 p = permute(permute(permute(
+          i.z + vec4(0.0, i1.z, i2.z, 1.0))
+          + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+          + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+        float n_ = 0.142857142857;
+        vec3 ns = n_ * D.wyz - D.xzx;
+        vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+        vec4 x_ = floor(j * ns.z);
+        vec4 y_ = floor(j - 7.0 * x_);
+        vec4 x = x_ * ns.x + ns.yyyy;
+        vec4 y = y_ * ns.x + ns.yyyy;
+        vec4 h = 1.0 - abs(x) - abs(y);
+        vec4 b0 = vec4(x.xy, y.xy);
+        vec4 b1 = vec4(x.zw, y.zw);
+        vec4 s0 = floor(b0) * 2.0 + 1.0;
+        vec4 s1 = floor(b1) * 2.0 + 1.0;
+        vec4 sh = -step(h, vec4(0.0));
+        vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+        vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+        vec3 p0 = vec3(a0.xy, h.x);
+        vec3 p1 = vec3(a0.zw, h.y);
+        vec3 p2 = vec3(a1.xy, h.z);
+        vec3 p3 = vec3(a1.zw, h.w);
+        vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+        p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+        vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+        m = m * m;
+        return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+      }
+      float fbm(vec3 p) {
+        float value = 0.0;
+        float amplitude = 0.5;
+        float frequency = 1.0;
+        for (int i = 0; i < 5; i++) {
+          value += amplitude * snoise(p * frequency);
+          frequency *= 2.0;
+          amplitude *= 0.5;
+        }
+        return value;
+      }
+    `;
+
+    const vertexShader = `
+      uniform float uTime;
+      uniform float uProgress;
+      uniform float uNoiseAmplitude;
+      varying vec3 vNormal;
+      varying vec3 vWorldPosition;
+      varying float vDisplacement;
+      varying vec2 vUv;
+      ${NOISE_GLSL}
+      void main() {
+        vNormal = normalize(normalMatrix * normal);
+        vUv = uv;
+        float noise = fbm(position * 1.5 + uTime * 0.3);
+        float displacement = noise * uNoiseAmplitude * uProgress;
+        vDisplacement = displacement;
+        vec3 newPosition = position + normal * displacement;
+        vec4 worldPosition = modelMatrix * vec4(newPosition, 1.0);
+        vWorldPosition = worldPosition.xyz;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+      }
+    `;
+
+    const fragmentShader = `
+      uniform float uTime;
+      uniform float uProgress;
+      uniform vec3 uBaseColor;
+      uniform vec3 uAccentColor;
+      uniform vec3 uCameraPosition;
+      uniform sampler2D uTexture;
+      uniform float uTextureIntensity;
+      varying vec3 vNormal;
+      varying vec3 vWorldPosition;
+      varying float vDisplacement;
+      varying vec2 vUv;
+      float fresnelSchlick(float cosTheta, float f0) {
+        return f0 + (1.0 - f0) * pow(1.0 - cosTheta, 5.0);
+      }
+      void main() {
+        vec3 viewDir = normalize(uCameraPosition - vWorldPosition);
+        float cosTheta = clamp(dot(viewDir, vNormal), 0.0, 1.0);
+        float f0 = 0.04 + uProgress * 0.5;
+        float fresnel = fresnelSchlick(cosTheta, f0);
+        vec3 baseColor = uBaseColor;
+        vec3 accentColor = uAccentColor;
+        float colorMix = smoothstep(0.0, 1.0, vDisplacement * 2.0 + uProgress * 0.5);
+        vec3 surfaceColor = mix(baseColor, accentColor, colorMix);
+        vec3 texColor = texture2D(uTexture, vUv).rgb;
+        vec3 finalTexture = mix(surfaceColor, texColor, uTextureIntensity);
+        vec3 fresnelColor = vec3(0.0, 1.0, 0.77) * fresnel * (0.5 + uProgress * 0.5);
+        vec3 lightDir = normalize(vec3(1.0, 1.0, 0.5));
+        float diffuse = max(dot(vNormal, lightDir), 0.0) * 0.4 + 0.6;
+        vec3 finalColor = finalTexture * diffuse + fresnelColor;
+        float pulse = sin(uTime * 2.0) * 0.03 * uProgress;
+        finalColor += pulse;
+        gl_FragColor = vec4(finalColor, 1.0);
+      }
+    `;
+
+    // ============================================
+    // SETUP THREE.JS
+    // ============================================
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 3.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.getElementById('canvas-layer').appendChild(renderer.domElement);
+
+    // Luzes
+    scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+    const light1 = new THREE.PointLight(0x00FFC4, 1.5, 20);
+    light1.position.set(5, 5, 5);
+    scene.add(light1);
+    const light2 = new THREE.PointLight(0xFF9800, 0.8, 20);
+    light2.position.set(-5, -3, 2);
+    scene.add(light2);
+    const light3 = new THREE.PointLight(0xFF5722, 0.5, 20);
+    light3.position.set(0, 3, -5);
+    scene.add(light3);
+
+    // Uniforms
+    const uniforms = {
+      uTime: { value: 0.0 },
+      uProgress: { value: 0.0 },
+      uNoiseAmplitude: { value: 0.15 },
+      uBaseColor: { value: new THREE.Color('#0A0F33') },
+      uAccentColor: { value: new THREE.Color('#00FFC4') },
+      uCameraPosition: { value: new THREE.Vector3() },
+      uTexture: { value: null },
+      uTextureIntensity: { value: 0.6 },
+    };
+
+    // Malha com shader
+    const geometry = new THREE.IcosahedronGeometry(1.5, 6);
+    const material = new THREE.ShaderMaterial({
+      uniforms: uniforms,
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      side: THREE.DoubleSide,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    // Partículas de fundo
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 2000;
+    const positions = new Float32Array(particlesCount * 3);
+    for (let i = 0; i < particlesCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 20;
+    }
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.02,
+      color: 0x00FFC4,
+      transparent: true,
+      opacity: 0.4,
+      sizeAttenuation: true,
+    });
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particles);
+
+    // ============================================
+    // CARREGAR TEXTURA
+    // ============================================
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(
+      './assets/textures/cornrev_hero.png',
+      (tex) => {
+        tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+        tex.colorSpace = THREE.SRGBColorSpace;
+        uniforms.uTexture.value = tex;
+        statusEl.textContent = 'Textura carregada — Skill ativa';
+        statusEl.style.color = '#00FFC4';
+      },
+      undefined,
+      (err) => {
+        statusEl.textContent = 'Textura falhou — usando cor sólida';
+        statusEl.style.color = '#FF9800';
+        console.warn('Erro ao carregar textura:', err);
+      }
+    );
+
+    // ============================================
+    // GSAP SCROLLTRIGGER
+    // ============================================
+    gsap.registerPlugin(ScrollTrigger);
+
+    ScrollTrigger.create({
+      trigger: '#scroll-container',
+      start: 'top top',
+      end: '400% top',
+      onUpdate: (self) => {
+        scrollProgress = self.progress;
+        progressBar.style.width = `${scrollProgress * 100}%`;
+
+        let phase = 1;
+        if (scrollProgress >= 0.75) phase = 4;
+        else if (scrollProgress >= 0.50) phase = 3;
+        else if (scrollProgress >= 0.25) phase = 2;
+
+        if (phase !== currentPhase) {
+          currentPhase = phase;
+          sections.forEach((el, idx) => {
+            const sectionPhase = idx + 1;
+            el.classList.toggle('active', sectionPhase === phase);
+            el.classList.toggle('interactive', sectionPhase === 4);
+          });
+        }
+      }
+    });
+
+    // ============================================
+    // ANIMATION LOOP
+    // ============================================
+    const clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const elapsed = clock.getElapsedTime();
+
+      // Lerp do progresso
+      uniforms.uProgress.value += (scrollProgress - uniforms.uProgress.value) * 0.05;
+      uniforms.uTime.value = elapsed;
+      uniforms.uCameraPosition.value.copy(camera.position);
+
+      // Intensidade da textura conforme scroll
+      const targetIntensity = 0.3 + uniforms.uProgress.value * 0.7;
+      uniforms.uTextureIntensity.value += (targetIntensity - uniforms.uTextureIntensity.value) * 0.02;
+
+      // Rotação da malha
+      mesh.rotation.y += delta * 0.15;
+      mesh.rotation.x = Math.sin(elapsed * 0.2) * 0.1;
+
+      // Zoom da câmera
+      const targetZoom = 3.5 + uniforms.uProgress.value * 2.0;
+      camera.position.z += (targetZoom - camera.position.z) * 0.03;
+
+      // Partículas animadas
+      const pos = particles.geometry.attributes.position.array;
+      for (let i = 0; i < pos.length; i += 3) {
+        pos[i + 1] += Math.sin(elapsed + pos[i] * 0.5) * 0.001;
+      }
+      particles.geometry.attributes.position.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // ============================================
+    // RESIZE
+    // ============================================
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // ============================================
+    // CTA
+    // ============================================
+    document.getElementById('cta-btn').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Status inicial
+    statusEl.textContent = 'Three.js carregado — Aguardando textura...';
+  </script>
+
+</body>
+</html>
